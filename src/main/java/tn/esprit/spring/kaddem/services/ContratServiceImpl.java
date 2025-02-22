@@ -22,7 +22,7 @@ ContratRepository contratRepository;
 @Autowired
 	EtudiantRepository etudiantRepository;
 
-	//c'est pour tester si le pipline se declencher avec un push dans le git (test final 22222)
+	//c'est pour tester si le pipline se declencher avec un push dans le git (test final final)
 
 	public List<Contrat> retrieveAllContrats(){
 		return (List<Contrat>) contratRepository.findAll();
