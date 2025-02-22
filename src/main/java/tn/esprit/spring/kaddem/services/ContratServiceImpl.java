@@ -21,6 +21,8 @@ public class ContratServiceImpl implements IContratService{
 ContratRepository contratRepository;
 @Autowired
 	EtudiantRepository etudiantRepository;
+
+	//c'est pour tester si le pipline se declencher avec un push dans le git
 	public List<Contrat> retrieveAllContrats(){
 		return (List<Contrat>) contratRepository.findAll();
 	}
