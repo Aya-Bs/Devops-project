@@ -30,7 +30,7 @@ pipeline {
     stage('MVN SONARQUBE') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'mvn sonar:sonar -Dsonar.token=$SONAR_TOKEN'
+          sh 'mvn sonar:sonar -Dsonar.token=$sonar-token'
         }
       }
     }
