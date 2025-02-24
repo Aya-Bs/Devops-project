@@ -27,12 +27,14 @@ pipeline {
         sh 'mvn package'
       }
     }
-    stage('MVN SONARQUBE') {
-      steps {
-        withSonarQubeEnv('SonarQube') {
-          sh 'mvn sonar:sonar -Dsonar.token=$sonar-token'
-        }
-      }
-    }
+    stage('SonarQube Analysis') {
+                steps {
+                    withCredentials([string(credentialsId: 'sonar-token', variable: 'khaddem-token')]) {  // Correction ici
+                        withSonarQubeEnv('SonarQube') {
+                            sh 'mvn sonar:sonar -Dsonar.projectKey=khaddem -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${khaddem-token}'
+                        }
+                    }
+                }
+            }
   }
 }
