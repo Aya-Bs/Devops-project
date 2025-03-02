@@ -12,6 +12,7 @@ import javax.persistence.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Entity
+@Table(name="etudiant")
 public class Etudiant implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

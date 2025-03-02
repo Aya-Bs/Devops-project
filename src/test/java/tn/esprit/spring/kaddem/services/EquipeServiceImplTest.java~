@@ -1,0 +1,32 @@
+package tn.esprit.spring.kaddem.services;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class EquipeServiceImplTest {
+
+    @Test
+    void retrieveAllEquipes() {
+    }
+
+    @Test
+    void addEquipe() {
+    }
+
+    @Test
+    void deleteEquipe() {
+    }
+
+    @Test
+    void retrieveEquipe() {
+    }
+
+    @Test
+    void updateEquipe() {
+    }
+
+    @Test
+    void evoluerEquipes() {
+    }
+}

@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+@Table(name="departement")
 public class Departement implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

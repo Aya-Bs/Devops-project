@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @ToString
+@Table(name = "contrat")
 public class Contrat implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
