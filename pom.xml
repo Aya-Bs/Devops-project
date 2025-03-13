@@ -70,13 +70,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Spring Boot Test pour les tests d'intégration -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <!-- Deploy to Nexus -->
