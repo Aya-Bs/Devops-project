@@ -1,38 +1,40 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  # Service de l'application Spring Boot
-  kaddem-app:
-    image: sarrahsahli/kaddem:latest
-    container_name: kaddem-app
-    ports:
-      - "8085:8085"
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-    networks:
-      - kaddem-network
-    depends_on:
-      - mysql-db
-
-  # Service MySQL
-  mysql-db:
-    image: mysql:8.0
-    container_name: mysql-db
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kaddem
-      MYSQL_USER: kaddem
-      MYSQL_PASSWORD: kaddem
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=kaddem
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - db:/var/lib/mysql
     networks:
-      - kaddem-network
+      - springboot-mysql-net
+
+  app-kaddem:
+    image: sarrahsahli/kaddem:latest
+    restart: on-failure
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/kaddem?createDatabaseIfNotExist=true",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    depends_on:
+      - mysqldb
+    networks:
+      - springboot-mysql-net
 
 volumes:
-  mysql-data:
+  db:
 
 networks:
-  kaddem-network:
+  springboot-mysql-net:
     driver: bridge
