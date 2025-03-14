@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ""  # Set to empty string
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # Allow empty password
+      MYSQL_DATABASE: db  # Database name
+    ports:
+      - "3306:3306"  # Expose MySQL port
+
+  spring-app:
+    image: eyaboukhris/devops-project:1.0.0
+    container_name: kaddem-container
+    restart: always
+    depends_on:
+      - mysql-db  # Ensure MySQL starts first
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""  # Set to empty string
+    ports:
+      - "8089:8089"  # Expose Spring app port
