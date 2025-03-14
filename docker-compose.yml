@@ -1,33 +1,38 @@
 version: '3.8'
-services:
-  backend:
-    image: sarrahsahli/kaddem:0.0.1
-    restart: on-failure
-    container_name: kaddem-backend
-    ports:
-      - 8085:8085  # Expose le port 8080 pour accéder à votre application Spring Boot
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/kaddem/db?&createDatabaseIfNotExist=true&useUnicode=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: null
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-    stdin_open: true
-    tty: true
-    depends_on:
-      - mysql
 
-  mysql:
-    image: mysql:5.7
+services:
+  # Service de l'application Spring Boot
+  kaddem-app:
+    image: sarrahsahli/kaddem:latest
+    container_name: kaddem-app
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    networks:
+      - kaddem-network
+    depends_on:
+      - mysql-db
+
+  # Service MySQL
+  mysql-db:
+    image: mysql:8.0
     container_name: mysql-db
     environment:
-      MYSQL_ROOT_PASSWORD:
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem
-    volumes:
-      - db:/var/lib/mysql
+      MYSQL_USER: kaddem
+      MYSQL_PASSWORD: kaddem
     ports:
-      - "3307:3307"  # Expose le port MySQL pour l'accès externe, mais il ne devrait pas être nécessaire en prod.
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - kaddem-network
 
 volumes:
-  db:
+  mysql-data:
 
-
+networks:
+  kaddem-network:
+    driver: bridge
