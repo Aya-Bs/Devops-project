@@ -12,13 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/etudiant")
 public class EtudiantRestController {
+
 	@Autowired
 	IEtudiantService etudiantService;
 	// http://localhost:8089/Kaddem/etudiant/retrieve-all-etudiants
 	@GetMapping()
 	public List<Etudiant> getEtudiants() {
-		List<Etudiant> listEtudiants = etudiantService.retrieveAllEtudiants();
-		return listEtudiants;
+		return etudiantService.retrieveAllEtudiants();
 	}
 	// http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
 	@GetMapping("/retrieve-etudiant/{etudiant-id}")
@@ -29,8 +29,7 @@ public class EtudiantRestController {
 	// http://localhost:8089/Kaddem/etudiant/add-etudiant
 	@PostMapping("/add-etudiant")
 	public Etudiant addEtudiant(@RequestBody Etudiant e) {
-		Etudiant etudiant = etudiantService.addEtudiant(e);
-		return etudiant;
+		return etudiantService.addEtudiant(e);
 	}
 
 	// http://localhost:8089/Kaddem/etudiant/remove-etudiant/1
@@ -42,9 +41,8 @@ public class EtudiantRestController {
 	// http://localhost:8089/Kaddem/etudiant/update-etudiant
 	@PutMapping("/update-etudiant")
 	public Etudiant updateEtudiant(@RequestBody Etudiant e) {
-		Etudiant etudiant= etudiantService.updateEtudiant(e);
+		return etudiantService.updateEtudiant(e);
 
-		return etudiant;
 	}
 
 	//@PutMapping("/affecter-etudiant-departement")
@@ -55,10 +53,8 @@ public class EtudiantRestController {
 //addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe)
     /* Ajouter un étudiant tout en lui affectant un contrat et une équipe */
     @PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
-    @ResponseBody
     public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {
-        Etudiant etudiant = etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
-        return etudiant;
+        return etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
     }
 
 	@GetMapping(value = "/getEtudiantsByDepartement/{idDepartement}")
