@@ -1,137 +1,167 @@
 package tn.esprit.spring.kaddem.services;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import tn.esprit.spring.kaddem.entities.Contrat;
-import tn.esprit.spring.kaddem.entities.Specialite;
-import tn.esprit.spring.kaddem.repositories.ContratRepository;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.Specialite;
+import tn.esprit.spring.kaddem.repositories.ContratRepository;
+import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
+
+import java.util.*;
+
 @ExtendWith(MockitoExtension.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ContratServiceImplTest {
+class ContratServiceImplTest {
 
 	@Mock
 	private ContratRepository contratRepository;
 
+	@Mock
+	private EtudiantRepository etudiantRepository;
+
 	@InjectMocks
 	private ContratServiceImpl contratService;
 
+	private Contrat contrat;
+	private Etudiant etudiant;
+
 	@BeforeEach
-	public void setup() {
-		MockitoAnnotations.openMocks(this);
+	void setUp() {
+		contrat = new Contrat();
+		contrat.setIdContrat(1);
+		contrat.setArchive(false);
+		contrat.setSpecialite(Specialite.IA); // Ensure Specialite is set
+		contrat.setDateDebutContrat(new Date()); // Set a valid start date
+		contrat.setDateFinContrat(new Date(System.currentTimeMillis() + 86400000)); // Set a valid end date (1 day later)
+		contrat.setMontantContrat(1000); // Set a valid montantContrat
+
+		etudiant = new Etudiant();
+		etudiant.setNomE("John");
+		etudiant.setPrenomE("Doe");
+		etudiant.setContrats(new HashSet<>());
 	}
 
 	@Test
-	public void testRetrieveAllContrats() {
+	void retrieveAllContrats_ShouldReturnList() {
 		// Arrange
-		Contrat contrat1 = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
-		Contrat contrat2 = new Contrat(2, new Date(), new Date(), Specialite.CLOUD, false, 2000);
-		when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat1, contrat2));
+		List<Contrat> contrats = Arrays.asList(contrat);
+		when(contratRepository.findAll()).thenReturn(contrats);
 
 		// Act
-		List<Contrat> contrats = contratService.retrieveAllContrats();
+		List<Contrat> result = contratService.retrieveAllContrats();
 
 		// Assert
-		assertEquals(2, contrats.size());
+		assertEquals(1, result.size());
 		verify(contratRepository, times(1)).findAll();
 	}
 
 	@Test
-	public void testAddContrat() {
+	void addContrat_ShouldSaveAndReturnContrat() {
 		// Arrange
-		Contrat contrat = new Contrat(3, new Date(), new Date(), Specialite.IA, false, 1000);
-		when(contratRepository.save(contrat)).thenReturn(contrat);
+		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
 		// Act
-		Contrat savedContrat = contratService.addContrat(contrat);
+		Contrat result = contratService.addContrat(contrat);
 
 		// Assert
-		assertNotNull(savedContrat);
-		assertEquals(Specialite.IA, savedContrat.getSpecialite());
+		assertNotNull(result);
+		assertEquals(1, result.getIdContrat());
 		verify(contratRepository, times(1)).save(contrat);
 	}
 
 	@Test
-	public void testRetrieveContrat() {
+	void updateContrat_ShouldUpdateAndReturnContrat() {
 		// Arrange
-		Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
+		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+
+		// Act
+		Contrat result = contratService.updateContrat(contrat);
+
+		// Assert
+		assertNotNull(result);
+		assertEquals(1, result.getIdContrat());
+		verify(contratRepository, times(1)).save(contrat);
+	}
+
+	@Test
+	void retrieveContrat_ShouldReturnContrat() {
+		// Arrange
 		when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
 
 		// Act
-		Contrat foundContrat = contratService.retrieveContrat(1);
+		Contrat result = contratService.retrieveContrat(1);
 
 		// Assert
-		assertNotNull(foundContrat);
-		assertEquals(Specialite.IA, foundContrat.getSpecialite());
+		assertNotNull(result);
+		assertEquals(1, result.getIdContrat());
 		verify(contratRepository, times(1)).findById(1);
 	}
 
 	@Test
-	public void testRemoveContrat() {
+	void removeContrat_ShouldDeleteContrat() {
 		// Arrange
-		doNothing().when(contratRepository).deleteById(1);
+		when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
+		doNothing().when(contratRepository).delete(any(Contrat.class));
 
 		// Act
 		contratService.removeContrat(1);
 
 		// Assert
-		verify(contratRepository, times(1)).deleteById(1);
+		verify(contratRepository, times(1)).delete(contrat);
 	}
 
 	@Test
-	public void testNbContratsValides() {
+	void affectContratToEtudiant_ShouldAssignContrat() {
+		// Arrange
+		when(etudiantRepository.findByNomEAndPrenomE("John", "Doe")).thenReturn(etudiant);
+		when(contratRepository.findByIdContrat(1)).thenReturn(contrat);
+		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+
+		// Act
+		Contrat result = contratService.affectContratToEtudiant(1, "John", "Doe");
+
+		// Assert
+		assertNotNull(result);
+		assertEquals(etudiant, result.getEtudiant());
+		verify(contratRepository, times(1)).save(contrat);
+	}
+
+	@Test
+	void nbContratsValides_ShouldReturnCount() {
 		// Arrange
 		Date startDate = new Date();
 		Date endDate = new Date();
 		when(contratRepository.getnbContratsValides(startDate, endDate)).thenReturn(5);
 
 		// Act
-		Integer nbContrats = contratService.nbContratsValides(startDate, endDate);
+		Integer result = contratService.nbContratsValides(startDate, endDate);
 
 		// Assert
-		assertEquals(5, nbContrats);
+		assertEquals(5, result);
 		verify(contratRepository, times(1)).getnbContratsValides(startDate, endDate);
 	}
 
 	@Test
-	public void testGetChiffreAffaireEntreDeuxDates() {
+	void retrieveAndUpdateStatusContrat_ShouldUpdateStatus() {
 		// Arrange
-		Date startDate = new Date();
-		Date endDate = new Date();
-		Contrat contrat1 = new Contrat(1, startDate, endDate, Specialite.IA, false, 1000);
-		Contrat contrat2 = new Contrat(2, startDate, endDate, Specialite.CLOUD, false, 2000);
-		when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat1, contrat2));
+		Contrat contrat = new Contrat();
+		contrat.setIdContrat(1);
+		contrat.setArchive(false);
+		contrat.setSpecialite(Specialite.IA);
+		contrat.setDateDebutContrat(new Date()); // Set a valid start date
+		contrat.setDateFinContrat(new Date()); // Set dateFinContrat to the current date to trigger archiving
+		contrat.setMontantContrat(1000);
 
-		// Act
-		float chiffreAffaire = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
-
-		// Assert
-		assertTrue(chiffreAffaire > 0); // Add specific assertions based on your logic
-		verify(contratRepository, times(1)).findAll();
-	}
-
-	@Test
-	public void testRetrieveAndUpdateStatusContrat() {
-		// Arrange
-		Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
-		when(contratRepository.findAll()).thenReturn(Arrays.asList(contrat));
+		List<Contrat> contrats = Arrays.asList(contrat);
+		when(contratRepository.findAll()).thenReturn(contrats);
+		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
 		// Act
 		contratService.retrieveAndUpdateStatusContrat();
@@ -139,5 +169,22 @@ public class ContratServiceImplTest {
 		// Assert
 		verify(contratRepository, times(1)).findAll();
 		verify(contratRepository, times(1)).save(contrat);
+		assertTrue(contrat.getArchive(), "Expected contract to be archived");
+	}
+
+	@Test
+	void getChiffreAffaireEntreDeuxDates_ShouldCalculateRevenue() {
+		// Arrange
+		Date startDate = new Date(); // Current date
+		Date endDate = new Date(System.currentTimeMillis() + 86400000); // 1 day later
+		List<Contrat> contrats = Arrays.asList(contrat);
+		when(contratRepository.findAll()).thenReturn(contrats);
+
+		// Act
+		float result = contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
+
+		// Assert
+		assertTrue(result > 0, "Expected revenue to be greater than 0");
+		verify(contratRepository, times(1)).findAll();
 	}
 }
