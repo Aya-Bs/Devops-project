@@ -20,8 +20,8 @@ public class ContratRepositoryTest {
     @Test
     public void testFindAll() {
         // Arrange
-        Contrat contrat1 = new Contrat(new Date(), new Date(), Specialite.IA, false, 1000);
-        Contrat contrat2 = new Contrat(new Date(), new Date(), Specialite.CLOUD, false, 2000);
+        Contrat contrat1 = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
+        Contrat contrat2 = new Contrat(2, new Date(), new Date(), Specialite.CLOUD, false, 2000);
         contratRepository.save(contrat1);
         contratRepository.save(contrat2);
 
@@ -37,7 +37,7 @@ public class ContratRepositoryTest {
         // Arrange
         Date startDate = new Date();
         Date endDate = new Date();
-        Contrat contrat = new Contrat(startDate, endDate, Specialite.IA, false, 1000);
+        Contrat contrat = new Contrat(1, startDate, endDate, Specialite.IA, false, 1000);
         contratRepository.save(contrat);
 
         // Act

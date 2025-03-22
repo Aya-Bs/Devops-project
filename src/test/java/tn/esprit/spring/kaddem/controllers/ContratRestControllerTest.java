@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -21,21 +20,17 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(ContratRestController.class) // Use WebMvcTest for controller tests
 public class ContratRestControllerTest {
-
-
-
-	@InjectMocks
-	private ContratRestController contratRestController;
-
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
 	private IContratService contratService;
+
+	@InjectMocks
+	private ContratRestController contratRestController;
 
 	@BeforeEach
 	public void setup() {
@@ -47,8 +42,8 @@ public class ContratRestControllerTest {
 	@Test
 	public void testGetContrats() throws Exception {
 		// Arrange
-		Contrat contrat1 = new Contrat(1,new Date(), new Date(), Specialite.IA, false, 1000);
-		Contrat contrat2 = new Contrat(2,new Date(), new Date(), Specialite.CLOUD, false, 2000);
+		Contrat contrat1 = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
+		Contrat contrat2 = new Contrat(2, new Date(), new Date(), Specialite.CLOUD, false, 2000);
 		when(contratService.retrieveAllContrats()).thenReturn(Arrays.asList(contrat1, contrat2));
 
 		// Act & Assert
@@ -62,7 +57,7 @@ public class ContratRestControllerTest {
 	@Test
 	public void testRetrieveContrat() throws Exception {
 		// Arrange
-		Contrat contrat = new Contrat(new Date(), new Date(), Specialite.IA, false, 1000);
+		Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
 		when(contratService.retrieveContrat(1)).thenReturn(contrat);
 
 		// Act & Assert
@@ -76,13 +71,13 @@ public class ContratRestControllerTest {
 	@Test
 	public void testAddContrat() throws Exception {
 		// Arrange
-		Contrat contrat = new Contrat(3,new Date(), new Date(), Specialite.IA, false, 1000);
+		Contrat contrat = new Contrat(3, new Date(), new Date(), Specialite.IA, false, 1000);
 		when(contratService.addContrat(any(Contrat.class))).thenReturn(contrat);
 
 		// Act & Assert
 		mockMvc.perform(post("/contrat/add-contrat")
 						.contentType("application/json")
-						.content("{\"dateDebutContrat\": \"2025-03-22\", \"dateFinContrat\": \"2025-03-22\", \"specialite\": \"IA\", \"archive\": false, \"montantContrat\": 1000}"))
+						.content("{\"idContrat\": 3, \"dateDebutContrat\": \"2025-03-22\", \"dateFinContrat\": \"2025-03-22\", \"specialite\": \"IA\", \"archive\": false, \"montantContrat\": 1000}"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.specialite").value("IA"))
 				.andDo(result -> System.out.println("Response Body: " + result.getResponse().getContentAsString())); // Debug response
@@ -104,13 +99,13 @@ public class ContratRestControllerTest {
 	@Test
 	public void testUpdateContrat() throws Exception {
 		// Arrange
-		Contrat contrat = new Contrat(new Date(), new Date(), Specialite.IA, false, 1000);
+		Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
 		when(contratService.updateContrat(any(Contrat.class))).thenReturn(contrat);
 
 		// Act & Assert
 		mockMvc.perform(put("/contrat/update-contrat")
 						.contentType("application/json")
-						.content("{\"dateDebutContrat\": \"2025-03-22\", \"dateFinContrat\": \"2025-03-22\", \"specialite\": \"IA\", \"archive\": false, \"montantContrat\": 1000}"))
+						.content("{\"idContrat\": 1, \"dateDebutContrat\": \"2025-03-22\", \"dateFinContrat\": \"2025-03-22\", \"specialite\": \"IA\", \"archive\": false, \"montantContrat\": 1000}"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.specialite").value("IA"))
 				.andDo(result -> System.out.println("Response Body: " + result.getResponse().getContentAsString())); // Debug response
@@ -120,8 +115,7 @@ public class ContratRestControllerTest {
 	@Test
 	public void testAssignContratToEtudiant() throws Exception {
 		// Arrange
-		Contrat contrat = new Contrat();
-		contrat.setSpecialite(Specialite.IA); // Set other fields as needed
+		Contrat contrat = new Contrat(1, new Date(), new Date(), Specialite.IA, false, 1000);
 		when(contratService.affectContratToEtudiant(1, "John", "Doe")).thenReturn(contrat);
 
 		// Act & Assert
