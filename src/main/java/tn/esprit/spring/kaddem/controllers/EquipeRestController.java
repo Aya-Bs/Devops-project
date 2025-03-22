@@ -15,7 +15,7 @@ import java.util.List;
 public class EquipeRestController {
 	IEquipeService equipeService;
 	// http://localhost:8089/Kaddem/equipe/retrieve-all-equipes
-	@GetMapping("/retrieve-all-equipes")
+	@GetMapping()
 	public List<Equipe> getEquipes() {
 		List<Equipe> listEquipes = equipeService.retrieveAllEquipes();
 		return listEquipes;

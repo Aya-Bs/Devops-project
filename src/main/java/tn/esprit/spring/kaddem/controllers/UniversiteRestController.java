@@ -17,7 +17,7 @@ public class UniversiteRestController {
 	@Autowired
 	IUniversiteService universiteService;
 	// http://localhost:8089/Kaddem/universite/retrieve-all-universites
-	@GetMapping("/retrieve-all-universites")
+	@GetMapping()
 	public List<Universite> getUniversites() {
 		List<Universite> listUniversites = universiteService.retrieveAllUniversites();
 		return listUniversites;

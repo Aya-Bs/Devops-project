@@ -18,7 +18,7 @@ import java.util.List;
 public class ContratRestController {
 	IContratService contratService;
 	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
-	@GetMapping("/retrieve-all-contrats")
+	@GetMapping()
 	public List<Contrat> getContrats() {
 		List<Contrat> listContrats = contratService.retrieveAllContrats();
 		return listContrats;
