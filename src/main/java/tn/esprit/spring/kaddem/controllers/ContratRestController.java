@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.kaddem.entities.Contrat;
-import tn.esprit.spring.kaddem.services.ContratServiceImpl;
 import tn.esprit.spring.kaddem.services.IContratService;
 
 import java.util.Date;
@@ -16,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/contrat")
 public class ContratRestController {
+
+	@Autowired
 	IContratService contratService;
 	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
 	@GetMapping()
@@ -54,10 +55,12 @@ public class ContratRestController {
 		return 	(contratService.affectContratToEtudiant(ce, nomE, prenomE));
 		}*/
 
-	@PutMapping(value = "/assignContratToEtudiant/{idContrat}/{nomE}/{prenomE}")
-	public Contrat assignContratToEtudiant (Integer idContrat, String nomE, String prenomE){
-	//	Contrat c= contratService.affectContratToEtudiant()
-		return 	(contratService.affectContratToEtudiant(idContrat, nomE, prenomE));
+	@PutMapping("/assignContratToEtudiant/{idContrat}/{nomE}/{prenomE}")
+	public Contrat assignContratToEtudiant(
+			@PathVariable Integer idContrat,
+			@PathVariable String nomE,
+			@PathVariable String prenomE) {
+		return contratService.affectContratToEtudiant(idContrat, nomE, prenomE);
 	}
 
 	//The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".

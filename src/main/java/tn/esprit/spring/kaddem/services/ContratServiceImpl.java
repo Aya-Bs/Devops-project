@@ -61,6 +61,7 @@ ContratRepository contratRepository;
 		contratRepository.save(ce);}
 		return ce;
 	}
+
 	public 	Integer nbContratsValides(Date startDate, Date endDate){
 		return contratRepository.getnbContratsValides(startDate, endDate);
 	}

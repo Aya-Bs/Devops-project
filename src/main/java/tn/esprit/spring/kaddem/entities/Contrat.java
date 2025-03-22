@@ -67,12 +67,7 @@ public class Contrat implements Serializable{
     public void setDateFinContrat(Date dateFinContrat) {
         this.dateFinContrat = dateFinContrat;
     }
-    public Specialite getSpecialite() {
-        return specialite;
-    }
-    public void setSpecialite(Specialite specialite) {
-        this.specialite = specialite;
-    }
+
     public Boolean getArchive() {
         return archive;
     }
@@ -94,5 +89,12 @@ public class Contrat implements Serializable{
         this.etudiant = etudiant;
     }
 
+    public Specialite getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(Specialite specialite) {
+        this.specialite = specialite;
+    }
 
 }
