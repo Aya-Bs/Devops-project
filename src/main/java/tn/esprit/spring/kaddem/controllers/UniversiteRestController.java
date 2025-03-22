@@ -16,7 +16,7 @@ import java.util.Set;
 public class UniversiteRestController {
 	@Autowired
 	IUniversiteService universiteService;
-	// http://localhost:8089/Kaddem/universite/retrieve-all-universites
+	// http://localhost:8089/Kaddem/universite
 	@GetMapping()
 	public List<Universite> getUniversites() {
 		List<Universite> listUniversites = universiteService.retrieveAllUniversites();
