@@ -16,8 +16,9 @@ import java.util.List;
 @RequestMapping("/contrat")
 public class ContratRestController {
 
-	@Autowired
 	IContratService contratService;
+
+
 	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
 	@GetMapping()
 	public List<Contrat> getContrats() {

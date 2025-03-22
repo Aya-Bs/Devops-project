@@ -151,13 +151,13 @@ class ContratServiceImplTest {
 	@Test
 	void retrieveAndUpdateStatusContrat_ShouldUpdateStatus() {
 		// Arrange
-		Contrat contrat = new Contrat();
-		contrat.setIdContrat(1);
-		contrat.setArchive(false);
-		contrat.setSpecialite(Specialite.IA);
-		contrat.setDateDebutContrat(new Date()); // Set a valid start date
-		contrat.setDateFinContrat(new Date()); // Set dateFinContrat to the current date to trigger archiving
-		contrat.setMontantContrat(1000);
+		Contrat cont = new Contrat();
+		cont.setIdContrat(1);
+		cont.setArchive(false);
+		cont.setSpecialite(Specialite.IA);
+		cont.setDateDebutContrat(new Date()); // Set a valid start date
+		cont.setDateFinContrat(new Date()); // Set dateFinContrat to the current date to trigger archiving
+		cont.setMontantContrat(1000);
 
 		List<Contrat> contrats = Arrays.asList(contrat);
 		when(contratRepository.findAll()).thenReturn(contrats);
