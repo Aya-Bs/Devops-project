@@ -13,10 +13,10 @@ import java.util.List;
 public class DepartementRestController {
 	IDepartementService departementService;
 	// http://localhost:8089/Kaddem/departement/retrieve-all-departements
-	@GetMapping()
+	@GetMapping("/retrieve-all-departements")
 	public List<Departement> getDepartements() {
-		return departementService.retrieveAllDepartements();
-
+		List<Departement> listDepartements = departementService.retrieveAllDepartements();
+		return listDepartements;
 	}
 	// http://localhost:8089/Kaddem/departement/retrieve-departement/8
 	@GetMapping("/retrieve-departement/{departement-id}")
@@ -27,7 +27,8 @@ public class DepartementRestController {
 	// http://localhost:8089/Kaddem/departement/add-departement
 	@PostMapping("/add-departement")
 	public Departement addDepartement(@RequestBody Departement d) {
-		return departementService.addDepartement(d);
+		Departement departement = departementService.addDepartement(d);
+		return departement;
 	}
 
 	// http://localhost:8089/Kaddem/departement/remove-departement/1
@@ -39,8 +40,7 @@ public class DepartementRestController {
 	// http://localhost:8089/Kaddem/departement/update-departement
 	@PutMapping("/update-departement")
 	public Departement updateDepartement(@RequestBody Departement e) {
-		return departementService.updateDepartement(e);
+		Departement departement= departementService.updateDepartement(e);
+		return departement;
 	}
 }
-
-
