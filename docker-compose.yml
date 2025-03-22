@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kaddem/db
+      MYSQL_DATABASE: kaddem
     ports:
       - "3306:3306"
     volumes:
@@ -19,7 +19,7 @@ services:
       - "8089:8089"
     environment:
       SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/kaddem/db?createDatabaseIfNotExist=true",
+        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/kaddem?createDatabaseIfNotExist=true",
         "spring.datasource.username": "root",
         "spring.datasource.password": "root",
         "spring.jpa.hibernate.ddl-auto": "update"
