@@ -28,15 +28,26 @@ services:
       stdin_open: true
       tty: true
 
-  sonarQube:
-   image: sonarqube
-   ports:
-    - "9000:9000"
+
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarQube_data:/opt/sonarqube/data
+      - sonarQube_logs:/opt/sonarqube/logs
+      - sonarQube_extensions:/opt/sonarqube/extensions
 
   nexus:
    image: sonatype/nexus3
    ports:
     - "8081:8081"
+   volumes:
+    - nexus_data:/nexus-data
 
 volumes:
+  sonarQube_data:
+  sonarQube_logs:
+  sonarQube_extensions:
   db:
+  nexus_data:
