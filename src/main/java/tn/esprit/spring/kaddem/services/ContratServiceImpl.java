@@ -18,13 +18,14 @@ import java.util.Set;
 @Slf4j
 @Service
 public class ContratServiceImpl implements IContratService{
+
 @Autowired
 ContratRepository contratRepository;
 @Autowired
 	EtudiantRepository etudiantRepository;
 
 	public List<Contrat> retrieveAllContrats(){
-		return (List<Contrat>) contratRepository.findAll();
+		return  contratRepository.findAll();
 	}
 
 	public Contrat updateContrat (Contrat  ce){

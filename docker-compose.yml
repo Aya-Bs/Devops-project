@@ -6,27 +6,36 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem
     ports:
-      - "3306:3306"
+      - "3308:3306"
     volumes:
       - db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   app-kaddem:
     depends_on:
-      - mysqldb
+      mysqldb:
+        condition: service_healthy
     image: nousseiba/kaddem:1.0.0
     restart: on-failure
     ports:
-      - "8089:8089"
+      - "8090:8090"
     environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url=jdbc:mysql://mysqldb:3306/kaddem?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        "spring.datasource.username": "root",
-        "spring.datasource.password": "root",
-        "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect",
-        "spring.jpa.hibernate.ddl-auto": "update"
-      }'
-      stdin_open: true
-      tty: true
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/kaddem?useSSL=false&createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/kaddem/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+
+
 
 
   sonarqube:

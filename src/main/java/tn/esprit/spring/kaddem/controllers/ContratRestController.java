@@ -18,7 +18,7 @@ public class ContratRestController {
 	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
 	@GetMapping("/retrieve-all-contrats")
 	public List<Contrat> getContrats() {
-		return (List<Contrat>) contratService.retrieveAllContrats();
+		return  contratService.retrieveAllContrats();
 	}
 	// http://localhost:8089/Kaddem/contrat/retrieve-contrat/8
 	@GetMapping("/retrieve-contrat/{contrat-id}")
@@ -26,7 +26,7 @@ public class ContratRestController {
 		return contratService.retrieveContrat(contratId);
 	}
 
-	// http://localhost:8089/Kaddem/econtrat/add-contrat
+	// http://localhost:8089/Kaddem/contrat/add-contrat
 	@PostMapping("/add-contrat")
 	public Contrat addContrat(@RequestBody Contrat contrat1) {
 		return contratService.addContrat(contrat1);
@@ -46,7 +46,7 @@ public class ContratRestController {
 
 
 	@PutMapping(value = "/assignContratToEtudiant/{idContrat}/{nomE}/{prenomE}")
-	public Contrat assignContratToEtudiant (Integer idContrat, String nomE, String prenomE){
+	public Contrat assignContratToEtudiant (@PathVariable Integer idContrat, @PathVariable String nomE, @PathVariable String prenomE){
 		return 	(contratService.affectContratToEtudiant(idContrat, nomE, prenomE));
 	}
 
@@ -69,7 +69,6 @@ public class ContratRestController {
 	//public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
 	@GetMapping("/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
-	@ResponseBody
 	public float calculChiffreAffaireEntreDeuxDates(@PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
 													@PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
 
