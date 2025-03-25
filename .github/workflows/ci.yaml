@@ -14,7 +14,7 @@ jobs:
       - name: Trigger Jenkins job
         env:
           JENKINS_URL: https://d75f-197-238-231-61.ngrok-free.app
-          JENKINS_USER: nousseiba kaabi
+          JENKINS_USER: noussa
           JENKINS_TOKEN: 1132a14e099816b2788a12d252248031eb
         run: |
           # First get the CSRF crumb
