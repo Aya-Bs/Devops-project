@@ -15,7 +15,7 @@ jobs:
         env:
           JENKINS_URL: https://edcc-197-238-231-61.ngrok-free.app
           JENKINS_USER: noussa
-          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+          JENKINS_TOKEN: 1132a14e099816b2788a12d252248031eb
         run: |
           # Get CSRF Crumb (required for Jenkins 2.x+)
           CRUMB=$(curl -s --user "$JENKINS_USER:$JENKINS_TOKEN" \
