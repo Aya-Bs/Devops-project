@@ -15,5 +15,5 @@ jobs:
 
       - name: Trigger Jenkins job
         run: |
-          curl -X POST "https://edcc-197-238-231-61.ngrok-free.app/job/Kaddem/build" \
+          curl -X POST "https://5d41-197-238-231-61.ngrok-free.app/job/Kaddem/build" \
           --user "noussa:1132a14e099816b2788a12d252248031eb"
