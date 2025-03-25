@@ -1,25 +1,25 @@
 package tn.esprit.spring.kaddem.services;
 
-import tn.esprit.spring.kaddem.entities.DepartementDTO;
-import tn.esprit.spring.kaddem.entities.UniversiteDTO;
+import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.Universite;
 
 import java.util.List;
 import java.util.Set;
 
 public interface IUniversiteService {
-   public List<UniversiteDTO> retrieveAllUniversites();
+   public List<Universite> retrieveAllUniversites();
 
-    UniversiteDTO addUniversite (UniversiteDTO u);
+    Universite addUniversite (Universite  u);
 
-    UniversiteDTO updateUniversite (UniversiteDTO u);
+    Universite updateUniversite (Universite  u);
 
-    UniversiteDTO retrieveUniversite (Integer idUniversite);
+    Universite retrieveUniversite (Integer idUniversite);
 
     public  void deleteUniversite(Integer idUniversite);
 
     public void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement);
 
-    public Set<DepartementDTO> retrieveDepartementsByUniversite(Integer idUniversite);
+    public Set<Departement> retrieveDepartementsByUniversite(Integer idUniversite);
 
 
 }

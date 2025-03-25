@@ -1,22 +1,21 @@
 package tn.esprit.spring.kaddem.services;
 
-import tn.esprit.spring.kaddem.entities.ContratDTO;
-
+import tn.esprit.spring.kaddem.entities.Contrat;
 import java.util.Date;
 import java.util.List;
 
 public interface IContratService {
-    public List<ContratDTO> retrieveAllContrats();
+    public List<Contrat> retrieveAllContrats();
 
-    public ContratDTO updateContrat (ContratDTO  ce);
+    public Contrat updateContrat (Contrat  ce);
 
-    public  ContratDTO addContrat (ContratDTO ce);
+    public  Contrat addContrat (Contrat ce);
 
-    public ContratDTO retrieveContrat (Integer  idContrat);
+    public Contrat retrieveContrat (Integer  idContrat);
 
     public  void removeContrat(Integer idContrat);
 
-    public ContratDTO affectContratToEtudiant (Integer idContrat, String nomE, String prenomE);
+    public Contrat affectContratToEtudiant (Integer idContrat, String nomE, String prenomE);
 
         public 	Integer nbContratsValides(Date startDate, Date endDate);
 

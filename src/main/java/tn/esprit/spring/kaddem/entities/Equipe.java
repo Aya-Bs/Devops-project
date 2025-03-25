@@ -8,7 +8,8 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-public class EquipeDTO implements Serializable{
+@Table(name="equipe")
+public class Equipe implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idEquipe;
@@ -19,60 +20,60 @@ public class EquipeDTO implements Serializable{
     @ManyToMany(cascade =CascadeType.ALL)
 
     @JsonIgnore
-    private Set<EtudiantDTO> etudiantDTOS;
+    private Set<Etudiant> etudiants;
     @OneToOne
-    private DetailEquipeDTO detailEquipeDTO;
+    private DetailEquipe detailEquipe;
 
-    public EquipeDTO() {
-
+    public Equipe() {
+        // TODO Auto-generated constructor stub
     }
 
-    public EquipeDTO(String nomEquipe) {
+    public Equipe(String nomEquipe) {
         this.nomEquipe = nomEquipe;
     }
 
-    public EquipeDTO(String nomEquipe, Niveau niveau) {
+    public Equipe(String nomEquipe, Niveau niveau) {
         super();
         this.nomEquipe = nomEquipe;
         this.niveau = niveau;
     }
 
-    public EquipeDTO(Integer idEquipe, String nomEquipe, Niveau niveau) {
+    public Equipe(Integer idEquipe, String nomEquipe, Niveau niveau) {
         super();
         this.idEquipe = idEquipe;
         this.nomEquipe = nomEquipe;
         this.niveau = niveau;
     }
 
-    public EquipeDTO(String nomEquipe, Niveau niveau, Set<EtudiantDTO> etudiantDTOS, DetailEquipeDTO detailEquipeDTO) {
+    public Equipe(String nomEquipe, Niveau niveau, Set<Etudiant> etudiants, DetailEquipe detailEquipe) {
         this.nomEquipe = nomEquipe;
         this.niveau = niveau;
-        this.etudiantDTOS = etudiantDTOS;
-        this.detailEquipeDTO = detailEquipeDTO;
+        this.etudiants = etudiants;
+        this.detailEquipe = detailEquipe;
     }
 
-    public EquipeDTO(Integer idEquipe, String nomEquipe, Niveau niveau, Set<EtudiantDTO> etudiantDTOS, DetailEquipeDTO detailEquipeDTO) {
+    public Equipe(Integer idEquipe, String nomEquipe, Niveau niveau, Set<Etudiant> etudiants, DetailEquipe detailEquipe) {
         this.idEquipe = idEquipe;
         this.nomEquipe = nomEquipe;
         this.niveau = niveau;
-        this.etudiantDTOS = etudiantDTOS;
-        this.detailEquipeDTO = detailEquipeDTO;
+        this.etudiants = etudiants;
+        this.detailEquipe = detailEquipe;
     }
 
-    public Set<EtudiantDTO> getEtudiants() {
-        return etudiantDTOS;
+    public Set<Etudiant> getEtudiants() {
+        return etudiants;
     }
 
-    public void setEtudiants(Set<EtudiantDTO> etudiantDTOS) {
-        this.etudiantDTOS = etudiantDTOS;
+    public void setEtudiants(Set<Etudiant> etudiants) {
+        this.etudiants = etudiants;
     }
 
-    public DetailEquipeDTO getDetailEquipe() {
-        return detailEquipeDTO;
+    public DetailEquipe getDetailEquipe() {
+        return detailEquipe;
     }
 
-    public void setDetailEquipe(DetailEquipeDTO detailEquipeDTO) {
-        this.detailEquipeDTO = detailEquipeDTO;
+    public void setDetailEquipe(DetailEquipe detailEquipe) {
+        this.detailEquipe = detailEquipe;
     }
 
     public Integer getIdEquipe() {

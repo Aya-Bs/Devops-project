@@ -12,7 +12,8 @@ import javax.persistence.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Entity
-public class EtudiantDTO implements Serializable{
+@Table(name="etudiant")
+public class Etudiant implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idEtudiant;
@@ -20,35 +21,35 @@ public class EtudiantDTO implements Serializable{
     private String prenomE;
     @Enumerated(EnumType.STRING)
     private Option op;
-    @OneToMany(mappedBy="etudiantDTO", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="etudiant", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ContratDTO> contratsDTO;
+    private Set<Contrat> Contrats;
     @ManyToOne
     @JsonIgnore
-    private DepartementDTO departementDTO;
+    private Departement departement;
   //  @ManyToMany(cascade =CascadeType.ALL)
     @ManyToMany(mappedBy="etudiants")
 
     @JsonIgnore
-
-    private List<EquipeDTO> equipeDTOS;
-    public EtudiantDTO() {
-
+  //  private Set<Equipe> equipes ;
+    private List<Equipe> equipes ;
+    public Etudiant() {
+        // TODO Auto-generated constructor stub
     }
 
-    public EtudiantDTO(String nomE, String prenomE) {
+    public Etudiant(String nomE, String prenomE) {
         this.nomE = nomE;
         this.prenomE = prenomE;
     }
 
-    public EtudiantDTO(String nomE, String prenomE, Option op) {
+    public Etudiant(String nomE, String prenomE, Option op) {
         super();
         this.nomE = nomE;
         this.prenomE = prenomE;
         this.op = op;
     }
 
-    public EtudiantDTO(Integer idEtudiant, String nomE, String prenomE, Option op) {
+    public Etudiant(Integer idEtudiant, String nomE, String prenomE, Option op) {
         super();
         this.idEtudiant = idEtudiant;
         this.nomE = nomE;
@@ -56,28 +57,28 @@ public class EtudiantDTO implements Serializable{
         this.op = op;
     }
 
-    public Set<ContratDTO> getContrats() {
-        return contratsDTO;
+    public Set<Contrat> getContrats() {
+        return Contrats;
     }
 
-    public void setContrats(Set<ContratDTO> contrats) {
-        contratsDTO = contrats;
+    public void setContrats(Set<Contrat> contrats) {
+        Contrats = contrats;
     }
 
-    public DepartementDTO getDepartementDTO() {
-        return departementDTO;
+    public Departement getDepartement() {
+        return departement;
     }
 
-    public void setDepartementDTO(DepartementDTO departement) {
-        this.departementDTO = departement;
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
     }
 
-    public List<EquipeDTO> getEquipes() {
-        return equipeDTOS;
+    public List<Equipe> getEquipes() {
+        return equipes;
     }
 
-    public void setEquipes(List<EquipeDTO> equipeDTOS) {
-        this.equipeDTOS = equipeDTOS;
+    public void setEquipes(List<Equipe> equipes) {
+        this.equipes = equipes;
     }
 
     public Integer getIdEtudiant() {

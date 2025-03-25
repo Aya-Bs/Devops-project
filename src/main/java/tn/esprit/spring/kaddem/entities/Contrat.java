@@ -9,7 +9,8 @@ import javax.persistence.*;
 
 @Entity
 @ToString
-public class ContratDTO implements Serializable{
+@Table(name = "contrat")
+public class Contrat implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idContrat;
@@ -22,12 +23,13 @@ public class ContratDTO implements Serializable{
     private Boolean archive;
     private Integer montantContrat;
     @ManyToOne(cascade = CascadeType.ALL)
-    private EtudiantDTO etudiantDTO;
+    private Etudiant etudiant;
 
-    public ContratDTO() {
+    public Contrat() {
+        // TODO Auto-generated constructor stub
     }
 
-    public ContratDTO(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, Boolean archive,
+    public Contrat(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, Boolean archive,
                    Integer montantContrat) {
         super();
         this.dateDebutContrat = dateDebutContrat;
@@ -37,7 +39,7 @@ public class ContratDTO implements Serializable{
         this.montantContrat = montantContrat;
     }
 
-    public ContratDTO(Integer idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite,
+    public Contrat(Integer idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite,
                    Boolean archive, Integer montantContrat) {
         super();
         this.idContrat = idContrat;
@@ -66,7 +68,12 @@ public class ContratDTO implements Serializable{
     public void setDateFinContrat(Date dateFinContrat) {
         this.dateFinContrat = dateFinContrat;
     }
-
+    public Specialite getSpecialite() {
+        return specialite;
+    }
+    public void setSpecialite(Specialite specialite) {
+        this.specialite = specialite;
+    }
     public Boolean getArchive() {
         return archive;
     }
@@ -80,20 +87,13 @@ public class ContratDTO implements Serializable{
         this.montantContrat = montantContrat;
     }
 
-    public EtudiantDTO getEtudiantDTO() {
-        return etudiantDTO;
+    public Etudiant getEtudiant() {
+        return etudiant;
     }
 
-    public void setEtudiantDTO(EtudiantDTO etudiantDTO) {
-        this.etudiantDTO = etudiantDTO;
+    public void setEtudiant(Etudiant etudiant) {
+        this.etudiant = etudiant;
     }
 
-    public Specialite getSpecialite() {
-        return specialite;
-    }
-
-    public void setSpecialite(Specialite specialite) {
-        this.specialite = specialite;
-    }
 
 }

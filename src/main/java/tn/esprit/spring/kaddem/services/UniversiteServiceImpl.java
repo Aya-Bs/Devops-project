@@ -2,8 +2,8 @@ package tn.esprit.spring.kaddem.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.kaddem.entities.DepartementDTO;
-import tn.esprit.spring.kaddem.entities.UniversiteDTO;
+import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 
@@ -12,26 +12,27 @@ import java.util.Set;
 
 @Service
 public class UniversiteServiceImpl implements IUniversiteService{
-@Autowired    // NOSONAR
+@Autowired
     UniversiteRepository universiteRepository;
-@Autowired   // NOSONAR
+@Autowired
     DepartementRepository departementRepository;
-    public UniversiteServiceImpl() {  // NOSONAR
+    public UniversiteServiceImpl() {
+        // TODO Auto-generated constructor stub
     }
-  public   List<UniversiteDTO> retrieveAllUniversites(){
-return (List<UniversiteDTO>) universiteRepository.findAll();
+  public   List<Universite> retrieveAllUniversites(){
+return (List<Universite>) universiteRepository.findAll();
     }
 
- public UniversiteDTO addUniversite (UniversiteDTO u){
+ public    Universite addUniversite (Universite  u){
 return  (universiteRepository.save(u));
     }
 
- public UniversiteDTO updateUniversite (UniversiteDTO u){
+ public    Universite updateUniversite (Universite  u){
      return  (universiteRepository.save(u));
     }
 
-  public UniversiteDTO retrieveUniversite (Integer idUniversite){
-UniversiteDTO u = universiteRepository.findById(idUniversite).get();   // NOSONAR
+  public Universite retrieveUniversite (Integer idUniversite){
+Universite u = universiteRepository.findById(idUniversite).get();
 return  u;
     }
     public  void deleteUniversite(Integer idUniversite){
@@ -39,14 +40,14 @@ return  u;
     }
 
     public void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement){
-        UniversiteDTO u= universiteRepository.findById(idUniversite).orElse(null);   // NOSONAR
-        DepartementDTO d= departementRepository.findById(idDepartement).orElse(null);
-        u.getDepartements().add(d);    // NOSONAR
+        Universite u= universiteRepository.findById(idUniversite).orElse(null);
+        Departement d= departementRepository.findById(idDepartement).orElse(null);
+        u.getDepartements().add(d);
         universiteRepository.save(u);
     }
 
-    public Set<DepartementDTO> retrieveDepartementsByUniversite(Integer idUniversite){
-UniversiteDTO u=universiteRepository.findById(idUniversite).orElse(null);   // NOSONAR
-return u.getDepartements();     // NOSONAR
+    public Set<Departement> retrieveDepartementsByUniversite(Integer idUniversite){
+Universite u=universiteRepository.findById(idUniversite).orElse(null);
+return u.getDepartements();
     }
 }

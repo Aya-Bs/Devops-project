@@ -1,9 +1,10 @@
 package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.DepartementDTO;
-import tn.esprit.spring.kaddem.entities.UniversiteDTO;
+import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.services.IUniversiteService;
 
 import java.util.List;
@@ -13,22 +14,25 @@ import java.util.Set;
 @AllArgsConstructor
 @RequestMapping("/universite")
 public class UniversiteRestController {
+	@Autowired
 	IUniversiteService universiteService;
 	// http://localhost:8089/Kaddem/universite/retrieve-all-universites
 	@GetMapping("/retrieve-all-universites")
-	public List<UniversiteDTO> getUniversites() {
-		return universiteService.retrieveAllUniversites();
+	public List<Universite> getUniversites() {
+		List<Universite> listUniversites = universiteService.retrieveAllUniversites();
+		return listUniversites;
 	}
 	// http://localhost:8089/Kaddem/universite/retrieve-universite/8
 	@GetMapping("/retrieve-universite/{universite-id}")
-	public UniversiteDTO retrieveUniversite(@PathVariable("universite-id") Integer universiteId) {
+	public Universite retrieveUniversite(@PathVariable("universite-id") Integer universiteId) {
 		return universiteService.retrieveUniversite(universiteId);
 	}
 
 	// http://localhost:8089/Kaddem/universite/add-universite
 	@PostMapping("/add-universite")
-	public UniversiteDTO addUniversite(@RequestBody UniversiteDTO u) {  // NOSONAR
-		return universiteService.addUniversite(u);
+	public Universite addUniversite(@RequestBody Universite u) {
+		Universite universite = universiteService.addUniversite(u);
+		return universite;
 	}
 
 	// http://localhost:8089/Kaddem/universite/remove-universite/1
@@ -39,8 +43,9 @@ public class UniversiteRestController {
 
 	// http://localhost:8089/Kaddem/universite/update-universite
 	@PutMapping("/update-universite")
-	public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO u) {  // NOSONAR
-		return universiteService.updateUniversite(u);
+	public Universite updateUniversite(@RequestBody Universite u) {
+		Universite u1= universiteService.updateUniversite(u);
+		return u1;
 	}
 
 	//@PutMapping("/affecter-etudiant-departement")
@@ -50,9 +55,11 @@ public class UniversiteRestController {
 	}
 
 	@GetMapping(value = "/listerDepartementsUniversite/{idUniversite}")
-	public Set<DepartementDTO> listerDepartementsUniversite(@PathVariable("idUniversite") Integer idUniversite) {
+	public Set<Departement> listerDepartementsUniversite(@PathVariable("idUniversite") Integer idUniversite) {
 
 		return universiteService.retrieveDepartementsByUniversite(idUniversite);
 	}
 
 }
+
+

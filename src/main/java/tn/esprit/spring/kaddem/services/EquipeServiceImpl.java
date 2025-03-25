@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.kaddem.entities.ContratDTO;
-import tn.esprit.spring.kaddem.entities.EquipeDTO;
-import tn.esprit.spring.kaddem.entities.EtudiantDTO;
+import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.Equipe;
+import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Niveau;
 import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 
@@ -21,39 +21,41 @@ public class EquipeServiceImpl implements IEquipeService{
 	EquipeRepository equipeRepository;
 
 
-	public List<EquipeDTO> retrieveAllEquipes(){
-	return  (List<EquipeDTO>) equipeRepository.findAll();
+	public List<Equipe> retrieveAllEquipes(){
+	return  (List<Equipe>) equipeRepository.findAll();
 	}
-	public EquipeDTO addEquipe(EquipeDTO e){
+	public Equipe addEquipe(Equipe e){
 		return (equipeRepository.save(e));
 	}
 
 	public  void deleteEquipe(Integer idEquipe){
-		EquipeDTO e=retrieveEquipe(idEquipe);
+		Equipe e=retrieveEquipe(idEquipe);
 		equipeRepository.delete(e);
 	}
 
-	public EquipeDTO retrieveEquipe(Integer equipeId){
-		return equipeRepository.findById(equipeId).get();  // NOSONAR
+	public Equipe retrieveEquipe(Integer equipeId){
+		return equipeRepository.findById(equipeId).get();
 	}
 
-	public EquipeDTO updateEquipe(EquipeDTO e){
+	public Equipe updateEquipe(Equipe e){
 	return (	equipeRepository.save(e));
 	}
 
-	public void evoluerEquipes(){     // NOSONAR
-		List<EquipeDTO> equipeDTOS = (List<EquipeDTO>) equipeRepository.findAll();
-		for (EquipeDTO equipeDTO : equipeDTOS) {   // NOSONAR
-			if ((equipeDTO.getNiveau().equals(Niveau.JUNIOR)) || (equipeDTO.getNiveau().equals(Niveau.SENIOR))) {
-				List<EtudiantDTO> etudiantDTOS = (List<EtudiantDTO>) equipeDTO.getEtudiants();  // NOSONAR
-				Integer nbEtudiantsAvecContratsActifs=0;  // NOSONAR
-				for (EtudiantDTO etudiantDTO : etudiantDTOS) {
-					Set<ContratDTO> contrats = etudiantDTO.getContrats();
-					for (ContratDTO contrat : contrats) {  // NOSONAR
+	public void evoluerEquipes(){
+		List<Equipe> equipes = (List<Equipe>) equipeRepository.findAll();
+		for (Equipe equipe : equipes) {
+			if ((equipe.getNiveau().equals(Niveau.JUNIOR)) || (equipe.getNiveau().equals(Niveau.SENIOR))) {
+				List<Etudiant> etudiants = (List<Etudiant>) equipe.getEtudiants();
+				Integer nbEtudiantsAvecContratsActifs=0;
+				for (Etudiant etudiant : etudiants) {
+					Set<Contrat> contrats = etudiant.getContrats();
+					//Set<Contrat> contratsActifs=null;
+					for (Contrat contrat : contrats) {
 						Date dateSysteme = new Date();
-						long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();   // NOSONAR
-						long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));    // NOSONAR
-						if ((contrat.getArchive() == false) && (difference_In_Years > 1)) {   // NOSONAR
+						long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
+						long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));
+						if ((contrat.getArchive() == false) && (difference_In_Years > 1)) {
+							//	contratsActifs.add(contrat);
 							nbEtudiantsAvecContratsActifs++;
 							break;
 						}
@@ -61,14 +63,14 @@ public class EquipeServiceImpl implements IEquipeService{
 					}
 				}
 					if (nbEtudiantsAvecContratsActifs >= 3){
-						if (equipeDTO.getNiveau().equals(Niveau.JUNIOR)){
-							equipeDTO.setNiveau(Niveau.SENIOR);
-							equipeRepository.save(equipeDTO);
+						if (equipe.getNiveau().equals(Niveau.JUNIOR)){
+							equipe.setNiveau(Niveau.SENIOR);
+							equipeRepository.save(equipe);
 							break;
 						}
-						if (equipeDTO.getNiveau().equals(Niveau.SENIOR)){
-							equipeDTO.setNiveau(Niveau.EXPERT);
-							equipeRepository.save(equipeDTO);
+						if (equipe.getNiveau().equals(Niveau.SENIOR)){
+							equipe.setNiveau(Niveau.EXPERT);
+							equipeRepository.save(equipe);
 							break;
 						}
 				}

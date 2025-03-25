@@ -1,8 +1,9 @@
 package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.EtudiantDTO;
+import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.services.IEtudiantService;
 
 import java.util.List;
@@ -11,22 +12,25 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/etudiant")
 public class EtudiantRestController {
+	@Autowired
 	IEtudiantService etudiantService;
 	// http://localhost:8089/Kaddem/etudiant/retrieve-all-etudiants
 	@GetMapping("/retrieve-all-etudiants")
-	public List<EtudiantDTO> getEtudiants() {
-		return etudiantService.retrieveAllEtudiants();
+	public List<Etudiant> getEtudiants() {
+		List<Etudiant> listEtudiants = etudiantService.retrieveAllEtudiants();
+		return listEtudiants;
 	}
 	// http://localhost:8089/Kaddem/etudiant/retrieve-etudiant/8
 	@GetMapping("/retrieve-etudiant/{etudiant-id}")
-	public EtudiantDTO retrieveEtudiant(@PathVariable("etudiant-id") Integer etudiantId) {
+	public Etudiant retrieveEtudiant(@PathVariable("etudiant-id") Integer etudiantId) {
 		return etudiantService.retrieveEtudiant(etudiantId);
 	}
 
 	// http://localhost:8089/Kaddem/etudiant/add-etudiant
 	@PostMapping("/add-etudiant")
-	public EtudiantDTO addEtudiant(@RequestBody EtudiantDTO e) {  // NOSONAR
-		return etudiantService.addEtudiant(e);
+	public Etudiant addEtudiant(@RequestBody Etudiant e) {
+		Etudiant etudiant = etudiantService.addEtudiant(e);
+		return etudiant;
 	}
 
 	// http://localhost:8089/Kaddem/etudiant/remove-etudiant/1
@@ -37,28 +41,32 @@ public class EtudiantRestController {
 
 	// http://localhost:8089/Kaddem/etudiant/update-etudiant
 	@PutMapping("/update-etudiant")
-	public EtudiantDTO updateEtudiant(@RequestBody EtudiantDTO e) {  // NOSONAR
-		return etudiantService.updateEtudiant(e);
+	public Etudiant updateEtudiant(@RequestBody Etudiant e) {
+		Etudiant etudiant= etudiantService.updateEtudiant(e);
 
-
+		return etudiant;
 	}
 
 	//@PutMapping("/affecter-etudiant-departement")
 	@PutMapping(value="/affecter-etudiant-departement/{etudiantId}/{departementId}")
 	public void affecterEtudiantToDepartement(@PathVariable("etudiantId") Integer etudiantId, @PathVariable("departementId")Integer departementId){
 		etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
-	}
-	//addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe)
-	/* Ajouter un étudiant tout en lui affectant un contrat et une équipe */
-	@PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
-	public EtudiantDTO addEtudiantWithEquipeAndContract(@RequestBody EtudiantDTO e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {  // NOSONAR
-		return etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
-	}
+    }
+//addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe)
+    /* Ajouter un étudiant tout en lui affectant un contrat et une équipe */
+    @PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
+    @ResponseBody
+    public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {
+        Etudiant etudiant = etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
+        return etudiant;
+    }
 
 	@GetMapping(value = "/getEtudiantsByDepartement/{idDepartement}")
-	public List<EtudiantDTO> getEtudiantsParDepartement(@PathVariable("idDepartement") Integer idDepartement) {
+	public List<Etudiant> getEtudiantsParDepartement(@PathVariable("idDepartement") Integer idDepartement) {
 
-		return etudiantService.getEtudiantsByDepartementDTO(idDepartement);
+		return etudiantService.getEtudiantsByDepartement(idDepartement);
 	}
 
 }
+
+

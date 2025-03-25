@@ -1,9 +1,10 @@
 package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.EquipeDTO;
+import tn.esprit.spring.kaddem.entities.Equipe;
 import tn.esprit.spring.kaddem.services.IEquipeService;
 
 import java.util.List;
@@ -15,21 +16,21 @@ public class EquipeRestController {
 	IEquipeService equipeService;
 	// http://localhost:8089/Kaddem/equipe/retrieve-all-equipes
 	@GetMapping("/retrieve-all-equipes")
-	public List<EquipeDTO> getEquipes() {
-		return equipeService.retrieveAllEquipes();
-
+	public List<Equipe> getEquipes() {
+		List<Equipe> listEquipes = equipeService.retrieveAllEquipes();
+		return listEquipes;
 	}
 	// http://localhost:8089/Kaddem/equipe/retrieve-equipe/8
 	@GetMapping("/retrieve-equipe/{equipe-id}")
-	public EquipeDTO retrieveEquipe(@PathVariable("equipe-id") Integer equipeId) {
+	public Equipe retrieveEquipe(@PathVariable("equipe-id") Integer equipeId) {
 		return equipeService.retrieveEquipe(equipeId);
 	}
 
 	// http://localhost:8089/Kaddem/equipe/add-equipe
 	@PostMapping("/add-equipe")
-	public EquipeDTO addEquipe(@RequestBody EquipeDTO e) { // NOSONAR
-		return equipeService.addEquipe(e);
-
+	public Equipe addEquipe(@RequestBody Equipe e) {
+		Equipe equipe = equipeService.addEquipe(e);
+		return equipe;
 	}
 
 	// http://localhost:8089/Kaddem/equipe/remove-equipe/1
@@ -40,14 +41,16 @@ public class EquipeRestController {
 
 	// http://localhost:8089/Kaddem/equipe/update-equipe
 	@PutMapping("/update-equipe")
-	public EquipeDTO updateEtudiant(@RequestBody EquipeDTO e) {  // NOSONAR
-		return equipeService.updateEquipe(e);
-
+	public Equipe updateEtudiant(@RequestBody Equipe e) {
+		Equipe equipe= equipeService.updateEquipe(e);
+		return equipe;
 	}
 
 	@Scheduled(cron="0 0 13 * * *")
 	@PutMapping("/faireEvoluerEquipes")
 	public void faireEvoluerEquipes() {
-		equipeService.evoluerEquipes() ;
+		 equipeService.evoluerEquipes() ;
 	}
 }
+
+
