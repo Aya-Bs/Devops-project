@@ -21,14 +21,18 @@
 	@Service
 	@Slf4j
 	public class EtudiantServiceImpl implements IEtudiantService{
+		public final EtudiantRepository etudiantRepository ;
+		public final ContratRepository contratRepository;
+		public final EquipeRepository equipeRepository;
+		public final DepartementRepository departementRepository;
+
 		@Autowired
-		EtudiantRepository etudiantRepository ;
-		@Autowired
-		ContratRepository contratRepository;
-		@Autowired
-		EquipeRepository equipeRepository;
-		@Autowired
-		DepartementRepository departementRepository;
+		public EtudiantServiceImpl(EtudiantRepository etudiantRepository,ContratRepository contratRepository,EquipeRepository equipeRepository,DepartementRepository departementRepository) {
+			this.etudiantRepository = etudiantRepository;
+			this.contratRepository=contratRepository;
+			this.equipeRepository=equipeRepository;
+			this.departementRepository=departementRepository;
+		}
 		public List<Etudiant> retrieveAllEtudiants(){
 		return (List<Etudiant>) etudiantRepository.findAll();
 		}
