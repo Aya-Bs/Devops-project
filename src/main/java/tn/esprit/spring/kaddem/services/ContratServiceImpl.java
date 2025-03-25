@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.kaddem.entities.ContratDTO;
-import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.EtudiantDTO;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
@@ -48,7 +48,7 @@ ContratRepository contratRepository;
 
 
 	public ContratDTO affectContratToEtudiant (Integer idContrat, String nomE, String prenomE){
-		Etudiant e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
+		EtudiantDTO e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
 		ContratDTO ce=contratRepository.findByIdContrat(idContrat);
 		Set<ContratDTO> contrats= e.getContrats();
 		Integer nbContratssActifs=0;
@@ -60,7 +60,7 @@ ContratRepository contratRepository;
 			}
 		}
 		if (nbContratssActifs<=4){
-		ce.setEtudiant(e);
+		ce.setEtudiantDTO(e);
 		contratRepository.save(ce);}
 		return ce;
 	}

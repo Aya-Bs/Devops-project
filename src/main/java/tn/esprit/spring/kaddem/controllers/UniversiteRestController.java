@@ -2,9 +2,8 @@ package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.ContratDTO;
 import tn.esprit.spring.kaddem.entities.DepartementDTO;
-import tn.esprit.spring.kaddem.entities.Universite;
+import tn.esprit.spring.kaddem.entities.UniversiteDTO;
 import tn.esprit.spring.kaddem.services.IUniversiteService;
 
 import java.util.List;
@@ -17,18 +16,18 @@ public class UniversiteRestController {
 	IUniversiteService universiteService;
 	// http://localhost:8089/Kaddem/universite/retrieve-all-universites
 	@GetMapping("/retrieve-all-universites")
-	public List<Universite> getUniversites() {
+	public List<UniversiteDTO> getUniversites() {
 		return universiteService.retrieveAllUniversites();
 	}
 	// http://localhost:8089/Kaddem/universite/retrieve-universite/8
 	@GetMapping("/retrieve-universite/{universite-id}")
-	public Universite retrieveUniversite(@PathVariable("universite-id") Integer universiteId) {
+	public UniversiteDTO retrieveUniversite(@PathVariable("universite-id") Integer universiteId) {
 		return universiteService.retrieveUniversite(universiteId);
 	}
 
 	// http://localhost:8089/Kaddem/universite/add-universite
 	@PostMapping("/add-universite")
-	public Universite addUniversite(@RequestBody Universite u) {
+	public UniversiteDTO addUniversite(@RequestBody UniversiteDTO u) {
 		return universiteService.addUniversite(u);
 	}
 
@@ -40,7 +39,7 @@ public class UniversiteRestController {
 
 	// http://localhost:8089/Kaddem/universite/update-universite
 	@PutMapping("/update-universite")
-	public Universite updateUniversite(@RequestBody Universite u) {
+	public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO u) {
 		return universiteService.updateUniversite(u);
 	}
 

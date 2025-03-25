@@ -3,7 +3,7 @@ package tn.esprit.spring.kaddem.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.Equipe;
+import tn.esprit.spring.kaddem.entities.EquipeDTO;
 import tn.esprit.spring.kaddem.services.IEquipeService;
 
 import java.util.List;
@@ -15,19 +15,19 @@ public class EquipeRestController {
 	IEquipeService equipeService;
 	// http://localhost:8089/Kaddem/equipe/retrieve-all-equipes
 	@GetMapping("/retrieve-all-equipes")
-	public List<Equipe> getEquipes() {
+	public List<EquipeDTO> getEquipes() {
 		return equipeService.retrieveAllEquipes();
 
 	}
 	// http://localhost:8089/Kaddem/equipe/retrieve-equipe/8
 	@GetMapping("/retrieve-equipe/{equipe-id}")
-	public Equipe retrieveEquipe(@PathVariable("equipe-id") Integer equipeId) {
+	public EquipeDTO retrieveEquipe(@PathVariable("equipe-id") Integer equipeId) {
 		return equipeService.retrieveEquipe(equipeId);
 	}
 
 	// http://localhost:8089/Kaddem/equipe/add-equipe
 	@PostMapping("/add-equipe")
-	public Equipe addEquipe(@RequestBody Equipe e) {
+	public EquipeDTO addEquipe(@RequestBody EquipeDTO e) {
 		return equipeService.addEquipe(e);
 
 	}
@@ -40,7 +40,7 @@ public class EquipeRestController {
 
 	// http://localhost:8089/Kaddem/equipe/update-equipe
 	@PutMapping("/update-equipe")
-	public Equipe updateEtudiant(@RequestBody Equipe e) {
+	public EquipeDTO updateEtudiant(@RequestBody EquipeDTO e) {
 		return equipeService.updateEquipe(e);
 
 	}

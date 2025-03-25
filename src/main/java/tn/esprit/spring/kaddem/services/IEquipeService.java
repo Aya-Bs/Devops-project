@@ -1,14 +1,14 @@
 package tn.esprit.spring.kaddem.services;
 
-import tn.esprit.spring.kaddem.entities.Equipe;
+import tn.esprit.spring.kaddem.entities.EquipeDTO;
 
 import java.util.List;
 
 public interface IEquipeService {
-    public List<Equipe> retrieveAllEquipes();
-    public Equipe addEquipe(Equipe e);
+    public List<EquipeDTO> retrieveAllEquipes();
+    public EquipeDTO addEquipe(EquipeDTO e);
     public  void deleteEquipe(Integer idEquipe);
-    public Equipe updateEquipe(Equipe e);
-    public Equipe retrieveEquipe(Integer equipeId);
+    public EquipeDTO updateEquipe(EquipeDTO e);
+    public EquipeDTO retrieveEquipe(Integer equipeId);
     public void evoluerEquipes();
 }

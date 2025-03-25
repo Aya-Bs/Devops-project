@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.ContratDTO;
-import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.EtudiantDTO;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
@@ -30,7 +30,7 @@ class ContratServiceImplTest {
 	private ContratServiceImpl contratService;
 
 	private ContratDTO contrat;
-	private Etudiant etudiant;
+	private EtudiantDTO etudiantDTO;
 
 	@BeforeEach
 	void setUp() {
@@ -42,10 +42,10 @@ class ContratServiceImplTest {
 		contrat.setDateFinContrat(new Date(System.currentTimeMillis() + 86400000)); // Set a valid end date (1 day later)
 		contrat.setMontantContrat(1000); // Set a valid montantContrat
 
-		etudiant = new Etudiant();
-		etudiant.setNomE("John");
-		etudiant.setPrenomE("Doe");
-		etudiant.setContrats(new HashSet<>());
+		etudiantDTO = new EtudiantDTO();
+		etudiantDTO.setNomE("John");
+		etudiantDTO.setPrenomE("Doe");
+		etudiantDTO.setContrats(new HashSet<>());
 	}
 
 	@Test
@@ -120,7 +120,7 @@ class ContratServiceImplTest {
 	@Test
 	void affectContratToEtudiant_ShouldAssignContrat() {
 		// Arrange
-		when(etudiantRepository.findByNomEAndPrenomE("John", "Doe")).thenReturn(etudiant);
+		when(etudiantRepository.findByNomEAndPrenomE("John", "Doe")).thenReturn(etudiantDTO);
 		when(contratRepository.findByIdContrat(1)).thenReturn(contrat);
 		when(contratRepository.save(any(ContratDTO.class))).thenReturn(contrat);
 
@@ -129,7 +129,7 @@ class ContratServiceImplTest {
 
 		// Assert
 		assertNotNull(result);
-		assertEquals(etudiant, result.getEtudiant());
+		assertEquals(etudiantDTO, result.getEtudiantDTO());
 		verify(contratRepository, times(1)).save(contrat);
 	}
 

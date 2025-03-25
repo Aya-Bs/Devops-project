@@ -12,7 +12,7 @@ import javax.persistence.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 @Entity
-public class Etudiant implements Serializable{
+public class EtudiantDTO implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idEtudiant;
@@ -20,7 +20,7 @@ public class Etudiant implements Serializable{
     private String prenomE;
     @Enumerated(EnumType.STRING)
     private Option op;
-    @OneToMany(mappedBy="etudiant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="etudiantDTO", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ContratDTO> contratsDTO;
     @ManyToOne
@@ -31,24 +31,24 @@ public class Etudiant implements Serializable{
 
     @JsonIgnore
 
-    private List<Equipe> equipes ;
-    public Etudiant() {
+    private List<EquipeDTO> equipeDTOS;
+    public EtudiantDTO() {
 
     }
 
-    public Etudiant(String nomE, String prenomE) {
+    public EtudiantDTO(String nomE, String prenomE) {
         this.nomE = nomE;
         this.prenomE = prenomE;
     }
 
-    public Etudiant(String nomE, String prenomE, Option op) {
+    public EtudiantDTO(String nomE, String prenomE, Option op) {
         super();
         this.nomE = nomE;
         this.prenomE = prenomE;
         this.op = op;
     }
 
-    public Etudiant(Integer idEtudiant, String nomE, String prenomE, Option op) {
+    public EtudiantDTO(Integer idEtudiant, String nomE, String prenomE, Option op) {
         super();
         this.idEtudiant = idEtudiant;
         this.nomE = nomE;
@@ -72,12 +72,12 @@ public class Etudiant implements Serializable{
         this.departementDTO = departement;
     }
 
-    public List<Equipe> getEquipes() {
-        return equipes;
+    public List<EquipeDTO> getEquipes() {
+        return equipeDTOS;
     }
 
-    public void setEquipes(List<Equipe> equipes) {
-        this.equipes = equipes;
+    public void setEquipes(List<EquipeDTO> equipeDTOS) {
+        this.equipeDTOS = equipeDTOS;
     }
 
     public Integer getIdEtudiant() {

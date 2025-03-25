@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.kaddem.entities.ContratDTO;
-import tn.esprit.spring.kaddem.entities.Equipe;
-import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.EquipeDTO;
+import tn.esprit.spring.kaddem.entities.EtudiantDTO;
 import tn.esprit.spring.kaddem.entities.Niveau;
 import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 
@@ -21,34 +21,34 @@ public class EquipeServiceImpl implements IEquipeService{
 	EquipeRepository equipeRepository;
 
 
-	public List<Equipe> retrieveAllEquipes(){
-	return  (List<Equipe>) equipeRepository.findAll();
+	public List<EquipeDTO> retrieveAllEquipes(){
+	return  (List<EquipeDTO>) equipeRepository.findAll();
 	}
-	public Equipe addEquipe(Equipe e){
+	public EquipeDTO addEquipe(EquipeDTO e){
 		return (equipeRepository.save(e));
 	}
 
 	public  void deleteEquipe(Integer idEquipe){
-		Equipe e=retrieveEquipe(idEquipe);
+		EquipeDTO e=retrieveEquipe(idEquipe);
 		equipeRepository.delete(e);
 	}
 
-	public Equipe retrieveEquipe(Integer equipeId){
+	public EquipeDTO retrieveEquipe(Integer equipeId){
 		return equipeRepository.findById(equipeId).get();
 	}
 
-	public Equipe updateEquipe(Equipe e){
+	public EquipeDTO updateEquipe(EquipeDTO e){
 	return (	equipeRepository.save(e));
 	}
 
 	public void evoluerEquipes(){
-		List<Equipe> equipes = (List<Equipe>) equipeRepository.findAll();
-		for (Equipe equipe : equipes) {
-			if ((equipe.getNiveau().equals(Niveau.JUNIOR)) || (equipe.getNiveau().equals(Niveau.SENIOR))) {
-				List<Etudiant> etudiants = (List<Etudiant>) equipe.getEtudiants();
+		List<EquipeDTO> equipeDTOS = (List<EquipeDTO>) equipeRepository.findAll();
+		for (EquipeDTO equipeDTO : equipeDTOS) {
+			if ((equipeDTO.getNiveau().equals(Niveau.JUNIOR)) || (equipeDTO.getNiveau().equals(Niveau.SENIOR))) {
+				List<EtudiantDTO> etudiantDTOS = (List<EtudiantDTO>) equipeDTO.getEtudiants();
 				Integer nbEtudiantsAvecContratsActifs=0;
-				for (Etudiant etudiant : etudiants) {
-					Set<ContratDTO> contrats = etudiant.getContrats();
+				for (EtudiantDTO etudiantDTO : etudiantDTOS) {
+					Set<ContratDTO> contrats = etudiantDTO.getContrats();
 					//Set<Contrat> contratsActifs=null;
 					for (ContratDTO contrat : contrats) {
 						Date dateSysteme = new Date();
@@ -63,14 +63,14 @@ public class EquipeServiceImpl implements IEquipeService{
 					}
 				}
 					if (nbEtudiantsAvecContratsActifs >= 3){
-						if (equipe.getNiveau().equals(Niveau.JUNIOR)){
-							equipe.setNiveau(Niveau.SENIOR);
-							equipeRepository.save(equipe);
+						if (equipeDTO.getNiveau().equals(Niveau.JUNIOR)){
+							equipeDTO.setNiveau(Niveau.SENIOR);
+							equipeRepository.save(equipeDTO);
 							break;
 						}
-						if (equipe.getNiveau().equals(Niveau.SENIOR)){
-							equipe.setNiveau(Niveau.EXPERT);
-							equipeRepository.save(equipe);
+						if (equipeDTO.getNiveau().equals(Niveau.SENIOR)){
+							equipeDTO.setNiveau(Niveau.EXPERT);
+							equipeRepository.save(equipeDTO);
 							break;
 						}
 				}

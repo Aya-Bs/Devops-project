@@ -5,37 +5,37 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-public class DetailEquipe implements Serializable{
+public class DetailEquipeDTO implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idDetailEquipe;
     private Integer salle;
     private String thematique;
     @OneToOne(mappedBy="detailEquipe")
-    private Equipe equipe;
-    public DetailEquipe() {
+    private EquipeDTO equipeDTO;
+    public DetailEquipeDTO() {
 
     }
 
-    public DetailEquipe(Integer salle, String thematique) {
+    public DetailEquipeDTO(Integer salle, String thematique) {
         super();
         this.salle = salle;
         this.thematique = thematique;
     }
 
-    public DetailEquipe(Integer idDetailEquipe, Integer salle, String thematique) {
+    public DetailEquipeDTO(Integer idDetailEquipe, Integer salle, String thematique) {
         super();
         this.idDetailEquipe = idDetailEquipe;
         this.salle = salle;
         this.thematique = thematique;
     }
 
-    public Equipe getEquipe() {
-        return equipe;
+    public EquipeDTO getEquipe() {
+        return equipeDTO;
     }
 
-    public void setEquipe(Equipe equipe) {
-        this.equipe = equipe;
+    public void setEquipe(EquipeDTO equipeDTO) {
+        this.equipeDTO = equipeDTO;
     }
 
     public Integer getIdDetailEquipe() {

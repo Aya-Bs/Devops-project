@@ -13,7 +13,7 @@ public class DepartementDTO implements Serializable{
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idDepart;
     private String nomDepart;
-    @OneToMany(mappedBy="departementDTO")
+    @OneToMany(mappedBy="departement")
     @JsonIgnore
     private Set<EtudiantDTO> etudiantDTOS;
     public DepartementDTO() {

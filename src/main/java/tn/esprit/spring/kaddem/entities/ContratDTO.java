@@ -22,7 +22,7 @@ public class ContratDTO implements Serializable{
     private Boolean archive;
     private Integer montantContrat;
     @ManyToOne(cascade = CascadeType.ALL)
-    private Etudiant etudiant;
+    private EtudiantDTO etudiantDTO;
 
     public ContratDTO() {
     }
@@ -80,12 +80,12 @@ public class ContratDTO implements Serializable{
         this.montantContrat = montantContrat;
     }
 
-    public Etudiant getEtudiant() {
-        return etudiant;
+    public EtudiantDTO getEtudiantDTO() {
+        return etudiantDTO;
     }
 
-    public void setEtudiant(Etudiant etudiant) {
-        this.etudiant = etudiant;
+    public void setEtudiantDTO(EtudiantDTO etudiantDTO) {
+        this.etudiantDTO = etudiantDTO;
     }
 
     public Specialite getSpecialite() {

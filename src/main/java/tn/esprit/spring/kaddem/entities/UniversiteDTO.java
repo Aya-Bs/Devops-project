@@ -8,34 +8,34 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-public class Universite implements Serializable{
+public class UniversiteDTO implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idUniv;
     private String nomUniv;
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Departement> departements;
-    public Universite() {
+    private Set<DepartementDTO> departements;
+    public UniversiteDTO() {
 
     }
 
-    public Universite(String nomUniv) {
+    public UniversiteDTO(String nomUniv) {
         super();
         this.nomUniv = nomUniv;
     }
 
-    public Universite(Integer idUniv, String nomUniv) {
+    public UniversiteDTO(Integer idUniv, String nomUniv) {
         super();
         this.idUniv = idUniv;
         this.nomUniv = nomUniv;
     }
 
-    public Set<Departement> getDepartements() {
+    public Set<DepartementDTO> getDepartements() {
         return departements;
     }
 
-    public void setDepartements(Set<Departement> departements) {
+    public void setDepartements(Set<DepartementDTO> departements) {
         this.departements = departements;
     }
 

@@ -1,23 +1,23 @@
 package tn.esprit.spring.kaddem.services;
 
-import tn.esprit.spring.kaddem.entities.Etudiant;
+import tn.esprit.spring.kaddem.entities.EtudiantDTO;
 
 import java.util.List;
 
 public interface IEtudiantService {
-    public List<Etudiant> retrieveAllEtudiants();
+    public List<EtudiantDTO> retrieveAllEtudiants();
 
-    public Etudiant addEtudiant (Etudiant e);
+    public EtudiantDTO addEtudiant (EtudiantDTO e);
 
-    public Etudiant updateEtudiant (Etudiant e);
+    public EtudiantDTO updateEtudiant (EtudiantDTO e);
 
-    public Etudiant retrieveEtudiant(Integer  idEtudiant);
+    public EtudiantDTO retrieveEtudiant(Integer  idEtudiant);
 
     public void removeEtudiant(Integer idEtudiant);
 
     public void assignEtudiantToDepartement (Integer etudiantId, Integer departementId);
 
-    public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe);
+    public EtudiantDTO addAndAssignEtudiantToEquipeAndContract(EtudiantDTO e, Integer idContrat, Integer idEquipe);
 
-    public 	List<Etudiant> getEtudiantsByDepartementDTO (Integer idDepartement);
+    public 	List<EtudiantDTO> getEtudiantsByDepartementDTO (Integer idDepartement);
 }

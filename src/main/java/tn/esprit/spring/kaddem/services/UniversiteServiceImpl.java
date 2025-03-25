@@ -2,8 +2,8 @@ package tn.esprit.spring.kaddem.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.spring.kaddem.entities.Departement;
-import tn.esprit.spring.kaddem.entities.Universite;
+import tn.esprit.spring.kaddem.entities.DepartementDTO;
+import tn.esprit.spring.kaddem.entities.UniversiteDTO;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 
@@ -19,20 +19,20 @@ public class UniversiteServiceImpl implements IUniversiteService{
     public UniversiteServiceImpl() {
         // TODO Auto-generated constructor stub
     }
-  public   List<Universite> retrieveAllUniversites(){
-return (List<Universite>) universiteRepository.findAll();
+  public   List<UniversiteDTO> retrieveAllUniversites(){
+return (List<UniversiteDTO>) universiteRepository.findAll();
     }
 
- public    Universite addUniversite (Universite  u){
+ public UniversiteDTO addUniversite (UniversiteDTO u){
 return  (universiteRepository.save(u));
     }
 
- public    Universite updateUniversite (Universite  u){
+ public UniversiteDTO updateUniversite (UniversiteDTO u){
      return  (universiteRepository.save(u));
     }
 
-  public Universite retrieveUniversite (Integer idUniversite){
-Universite u = universiteRepository.findById(idUniversite).get();
+  public UniversiteDTO retrieveUniversite (Integer idUniversite){
+UniversiteDTO u = universiteRepository.findById(idUniversite).get();
 return  u;
     }
     public  void deleteUniversite(Integer idUniversite){
@@ -40,14 +40,14 @@ return  u;
     }
 
     public void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement){
-        Universite u= universiteRepository.findById(idUniversite).orElse(null);
-        Departement d= departementRepository.findById(idDepartement).orElse(null);
+        UniversiteDTO u= universiteRepository.findById(idUniversite).orElse(null);
+        DepartementDTO d= departementRepository.findById(idDepartement).orElse(null);
         u.getDepartements().add(d);
         universiteRepository.save(u);
     }
 
-    public Set<Departement> retrieveDepartementsByUniversite(Integer idUniversite){
-Universite u=universiteRepository.findById(idUniversite).orElse(null);
+    public Set<DepartementDTO> retrieveDepartementsByUniversite(Integer idUniversite){
+UniversiteDTO u=universiteRepository.findById(idUniversite).orElse(null);
 return u.getDepartements();
     }
 }
