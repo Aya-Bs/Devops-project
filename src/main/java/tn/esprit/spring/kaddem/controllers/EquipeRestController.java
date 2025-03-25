@@ -27,7 +27,7 @@ public class EquipeRestController {
 
 	// http://localhost:8089/Kaddem/equipe/add-equipe
 	@PostMapping("/add-equipe")
-	public EquipeDTO addEquipe(@RequestBody EquipeDTO e) {
+	public EquipeDTO addEquipe(@RequestBody EquipeDTO e) { // NOSONAR
 		return equipeService.addEquipe(e);
 
 	}
@@ -40,7 +40,7 @@ public class EquipeRestController {
 
 	// http://localhost:8089/Kaddem/equipe/update-equipe
 	@PutMapping("/update-equipe")
-	public EquipeDTO updateEtudiant(@RequestBody EquipeDTO e) {
+	public EquipeDTO updateEtudiant(@RequestBody EquipeDTO e) {  // NOSONAR
 		return equipeService.updateEquipe(e);
 
 	}

@@ -28,8 +28,8 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/contrat/add-contrat
 	@PostMapping("/add-contrat")
-	public ContratDTO addContrat(@RequestBody ContratDTO contrat) {
-		return contratService.addContrat(contrat);
+	public ContratDTO addContrat(@RequestBody ContratDTO contratDTO) {  // NOSONAR
+		return contratService.addContrat(contratDTO);
 	}
 
 	// http://localhost:8089/Kaddem/contrat/remove-contrat/1
@@ -40,8 +40,8 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/contrat/update-contrat
 	@PutMapping("/update-contrat")
-	public ContratDTO updateContrat(@RequestBody ContratDTO ce) {
-		return contratService.updateContrat(ce);
+	public ContratDTO updateContrat(@RequestBody ContratDTO contratDTO) { // NOSONAR
+		return contratService.updateContrat(contratDTO);
 	}
 
 

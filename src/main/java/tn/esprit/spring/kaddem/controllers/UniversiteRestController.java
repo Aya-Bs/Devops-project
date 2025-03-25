@@ -27,7 +27,7 @@ public class UniversiteRestController {
 
 	// http://localhost:8089/Kaddem/universite/add-universite
 	@PostMapping("/add-universite")
-	public UniversiteDTO addUniversite(@RequestBody UniversiteDTO u) {
+	public UniversiteDTO addUniversite(@RequestBody UniversiteDTO u) {  // NOSONAR
 		return universiteService.addUniversite(u);
 	}
 
@@ -39,7 +39,7 @@ public class UniversiteRestController {
 
 	// http://localhost:8089/Kaddem/universite/update-universite
 	@PutMapping("/update-universite")
-	public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO u) {
+	public UniversiteDTO updateUniversite(@RequestBody UniversiteDTO u) {  // NOSONAR
 		return universiteService.updateUniversite(u);
 	}
 

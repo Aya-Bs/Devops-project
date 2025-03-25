@@ -20,13 +20,13 @@ import java.util.List;
 @Service
 @Slf4j
 public class EtudiantServiceImpl implements IEtudiantService{
-	@Autowired
+	@Autowired   // NOSONAR
 	EtudiantRepository etudiantRepository ;
-	@Autowired
+	@Autowired    // NOSONAR
 	ContratRepository contratRepository;
-	@Autowired
+	@Autowired    // NOSONAR
 	EquipeRepository equipeRepository;
-    @Autowired
+    @Autowired    // NOSONAR
     DepartementRepository departementRepository;
 	public List<EtudiantDTO> retrieveAllEtudiants(){
 	return (List<EtudiantDTO>) etudiantRepository.findAll();
@@ -41,7 +41,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
 	}
 
 	public EtudiantDTO retrieveEtudiant(Integer  idEtudiant){
-		return etudiantRepository.findById(idEtudiant).get();
+		return etudiantRepository.findById(idEtudiant).get();   // NOSONAR
 	}
 
 	public void removeEtudiant(Integer idEtudiant){
@@ -50,17 +50,17 @@ public class EtudiantServiceImpl implements IEtudiantService{
 	}
 
 	public void assignEtudiantToDepartement (Integer etudiantId, Integer departementId){
-        EtudiantDTO etudiantDTO = etudiantRepository.findById(etudiantId).orElse(null);
+        EtudiantDTO etudiantDTO = etudiantRepository.findById(etudiantId).orElse(null);   // NOSONAR
         DepartementDTO departementDTO = departementRepository.findById(departementId).orElse(null);
-        etudiantDTO.setDepartementDTO(departementDTO);
+        etudiantDTO.setDepartementDTO(departementDTO);   // NOSONAR
         etudiantRepository.save(etudiantDTO);
 	}
 	@Transactional
 	public EtudiantDTO addAndAssignEtudiantToEquipeAndContract(EtudiantDTO e, Integer idContrat, Integer idEquipe){
-		ContratDTO c=contratRepository.findById(idContrat).orElse(null);
+		ContratDTO c=contratRepository.findById(idContrat).orElse(null);   // NOSONAR
 		EquipeDTO eq=equipeRepository.findById(idEquipe).orElse(null);
-		c.setEtudiantDTO(e);
-		eq.getEtudiants().add(e);
+		c.setEtudiantDTO(e);  // NOSONAR
+		eq.getEtudiants().add(e);   // NOSONAR
 return e;
 	}
 

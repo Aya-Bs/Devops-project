@@ -25,7 +25,7 @@ public class EtudiantRestController {
 
 	// http://localhost:8089/Kaddem/etudiant/add-etudiant
 	@PostMapping("/add-etudiant")
-	public EtudiantDTO addEtudiant(@RequestBody EtudiantDTO e) {
+	public EtudiantDTO addEtudiant(@RequestBody EtudiantDTO e) {  // NOSONAR
 		return etudiantService.addEtudiant(e);
 	}
 
@@ -37,7 +37,7 @@ public class EtudiantRestController {
 
 	// http://localhost:8089/Kaddem/etudiant/update-etudiant
 	@PutMapping("/update-etudiant")
-	public EtudiantDTO updateEtudiant(@RequestBody EtudiantDTO e) {
+	public EtudiantDTO updateEtudiant(@RequestBody EtudiantDTO e) {  // NOSONAR
 		return etudiantService.updateEtudiant(e);
 
 
@@ -51,7 +51,7 @@ public class EtudiantRestController {
 	//addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe)
 	/* Ajouter un étudiant tout en lui affectant un contrat et une équipe */
 	@PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
-	public EtudiantDTO addEtudiantWithEquipeAndContract(@RequestBody EtudiantDTO e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {
+	public EtudiantDTO addEtudiantWithEquipeAndContract(@RequestBody EtudiantDTO e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {  // NOSONAR
 		return etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
 	}
 

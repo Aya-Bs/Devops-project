@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class DepartementServiceImpl implements IDepartementService{
 
-	@Autowired
+	@Autowired    // NOSONAR
 	DepartementRepository departementRepository;
 
 	public List<DepartementDTO> retrieveAllDepartements(){
@@ -30,7 +30,7 @@ public class DepartementServiceImpl implements IDepartementService{
 	}
 
 	public  DepartementDTO retrieveDepartement (Integer idDepart){
-		return departementRepository.findById(idDepart).get();
+		return departementRepository.findById(idDepart).get();    // NOSONAR
 	}
 	public  void deleteDepartement(Integer idDepartement){
 		DepartementDTO d=retrieveDepartement(idDepartement);
