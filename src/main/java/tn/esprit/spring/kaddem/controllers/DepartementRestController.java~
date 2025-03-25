@@ -2,7 +2,7 @@ package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.DepartementDTO;
+import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.services.IDepartementService;
 
 import java.util.List;
@@ -14,18 +14,18 @@ public class DepartementRestController {
 	IDepartementService departementService;
 	// http://localhost:8089/Kaddem/departement/retrieve-all-departements
 	@GetMapping("/retrieve-all-departements")
-	public List<DepartementDTO> getDepartements() {
+	public List<Departement> getDepartements() {
 		return departementService.retrieveAllDepartements();
 	}
 	// http://localhost:8089/Kaddem/departement/retrieve-departement/8
 	@GetMapping("/retrieve-departement/{departement-id}")
-	public DepartementDTO retrieveDepartement(@PathVariable("departement-id") Integer departementId) {
+	public Departement retrieveDepartement(@PathVariable("departement-id") Integer departementId) {
 		return departementService.retrieveDepartement(departementId);
 	}
 
 	// http://localhost:8089/Kaddem/departement/add-departement
 	@PostMapping("/add-departement")
-	public DepartementDTO addDepartement(@RequestBody DepartementDTO d) {
+	public Departement addDepartement(@RequestBody Departement d) {
 		return departementService.addDepartement(d);
 	}
 
@@ -37,7 +37,7 @@ public class DepartementRestController {
 
 	// http://localhost:8089/Kaddem/departement/update-departement
 	@PutMapping("/update-departement")
-	public DepartementDTO updateDepartement(@RequestBody DepartementDTO e) {
+	public Departement updateDepartement(@RequestBody Departement e) {
 		return departementService.updateDepartement(e);
 
 	}

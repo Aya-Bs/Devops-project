@@ -1,17 +1,17 @@
 package tn.esprit.spring.kaddem.services;
 
-import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.DepartementDTO;
 
 import java.util.List;
 
 public interface IDepartementService {
-    public List<Departement> retrieveAllDepartements();
+    public List<DepartementDTO> retrieveAllDepartements();
 
-    public Departement addDepartement (Departement d);
+    public DepartementDTO addDepartement (DepartementDTO d);
 
-    public   Departement updateDepartement (Departement d);
+    public   DepartementDTO updateDepartement (DepartementDTO d);
 
-    public  Departement retrieveDepartement (Integer idDepart);
+    public  DepartementDTO retrieveDepartement (Integer idDepart);
 
     public  void deleteDepartement(Integer idDepartement);
 

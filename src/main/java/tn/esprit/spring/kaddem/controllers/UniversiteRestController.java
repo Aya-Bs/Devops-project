@@ -2,7 +2,8 @@ package tn.esprit.spring.kaddem.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.ContratDTO;
+import tn.esprit.spring.kaddem.entities.DepartementDTO;
 import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.services.IUniversiteService;
 
@@ -50,7 +51,7 @@ public class UniversiteRestController {
 	}
 
 	@GetMapping(value = "/listerDepartementsUniversite/{idUniversite}")
-	public Set<Departement> listerDepartementsUniversite(@PathVariable("idUniversite") Integer idUniversite) {
+	public Set<DepartementDTO> listerDepartementsUniversite(@PathVariable("idUniversite") Integer idUniversite) {
 
 		return universiteService.retrieveDepartementsByUniversite(idUniversite);
 	}

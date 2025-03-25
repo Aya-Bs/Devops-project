@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.ContratDTO;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
@@ -29,12 +29,12 @@ class ContratServiceImplTest {
 	@InjectMocks
 	private ContratServiceImpl contratService;
 
-	private Contrat contrat;
+	private ContratDTO contrat;
 	private Etudiant etudiant;
 
 	@BeforeEach
 	void setUp() {
-		contrat = new Contrat();
+		contrat = new ContratDTO();
 		contrat.setIdContrat(1);
 		contrat.setArchive(false);
 		contrat.setSpecialite(Specialite.IA); // Ensure Specialite is set
@@ -51,11 +51,11 @@ class ContratServiceImplTest {
 	@Test
 	void retrieveAllContrats_ShouldReturnList() {
 		// Arrange
-		List<Contrat> contrats = Arrays.asList(contrat);
+		List<ContratDTO> contrats = Arrays.asList(contrat);
 		when(contratRepository.findAll()).thenReturn(contrats);
 
 		// Act
-		List<Contrat> result = contratService.retrieveAllContrats();
+		List<ContratDTO> result = contratService.retrieveAllContrats();
 
 		// Assert
 		assertEquals(1, result.size());
@@ -65,10 +65,10 @@ class ContratServiceImplTest {
 	@Test
 	void addContrat_ShouldSaveAndReturnContrat() {
 		// Arrange
-		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+		when(contratRepository.save(any(ContratDTO.class))).thenReturn(contrat);
 
 		// Act
-		Contrat result = contratService.addContrat(contrat);
+		ContratDTO result = contratService.addContrat(contrat);
 
 		// Assert
 		assertNotNull(result);
@@ -79,10 +79,10 @@ class ContratServiceImplTest {
 	@Test
 	void updateContrat_ShouldUpdateAndReturnContrat() {
 		// Arrange
-		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+		when(contratRepository.save(any(ContratDTO.class))).thenReturn(contrat);
 
 		// Act
-		Contrat result = contratService.updateContrat(contrat);
+		ContratDTO result = contratService.updateContrat(contrat);
 
 		// Assert
 		assertNotNull(result);
@@ -96,7 +96,7 @@ class ContratServiceImplTest {
 		when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
 
 		// Act
-		Contrat result = contratService.retrieveContrat(1);
+		ContratDTO result = contratService.retrieveContrat(1);
 
 		// Assert
 		assertNotNull(result);
@@ -108,7 +108,7 @@ class ContratServiceImplTest {
 	void removeContrat_ShouldDeleteContrat() {
 		// Arrange
 		when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
-		doNothing().when(contratRepository).delete(any(Contrat.class));
+		doNothing().when(contratRepository).delete(any(ContratDTO.class));
 
 		// Act
 		contratService.removeContrat(1);
@@ -122,10 +122,10 @@ class ContratServiceImplTest {
 		// Arrange
 		when(etudiantRepository.findByNomEAndPrenomE("John", "Doe")).thenReturn(etudiant);
 		when(contratRepository.findByIdContrat(1)).thenReturn(contrat);
-		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+		when(contratRepository.save(any(ContratDTO.class))).thenReturn(contrat);
 
 		// Act
-		Contrat result = contratService.affectContratToEtudiant(1, "John", "Doe");
+		ContratDTO result = contratService.affectContratToEtudiant(1, "John", "Doe");
 
 		// Assert
 		assertNotNull(result);
@@ -151,7 +151,7 @@ class ContratServiceImplTest {
 	@Test
 	void retrieveAndUpdateStatusContrat_ShouldUpdateStatus() {
 		// Arrange
-		Contrat cont = new Contrat();
+		ContratDTO cont = new ContratDTO();
 		cont.setIdContrat(1);
 		cont.setArchive(false);
 		cont.setSpecialite(Specialite.IA);
@@ -159,9 +159,9 @@ class ContratServiceImplTest {
 		cont.setDateFinContrat(new Date()); // Set dateFinContrat to the current date to trigger archiving
 		cont.setMontantContrat(1000);
 
-		List<Contrat> contrats = Arrays.asList(contrat);
+		List<ContratDTO> contrats = Arrays.asList(contrat);
 		when(contratRepository.findAll()).thenReturn(contrats);
-		when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+		when(contratRepository.save(any(ContratDTO.class))).thenReturn(contrat);
 
 		// Act
 		contratService.retrieveAndUpdateStatusContrat();
@@ -177,7 +177,7 @@ class ContratServiceImplTest {
 		// Arrange
 		Date startDate = new Date(); // Current date
 		Date endDate = new Date(System.currentTimeMillis() + 86400000); // 1 day later
-		List<Contrat> contrats = Arrays.asList(contrat);
+		List<ContratDTO> contrats = Arrays.asList(contrat);
 		when(contratRepository.findAll()).thenReturn(contrats);
 
 		// Act

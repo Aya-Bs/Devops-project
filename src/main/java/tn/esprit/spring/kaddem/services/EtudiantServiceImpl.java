@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
-import tn.esprit.spring.kaddem.entities.Contrat;
-import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.ContratDTO;
+import tn.esprit.spring.kaddem.entities.DepartementDTO;
 import tn.esprit.spring.kaddem.entities.Equipe;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
@@ -52,20 +52,20 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
 	public void assignEtudiantToDepartement (Integer etudiantId, Integer departementId){
         Etudiant etudiant = etudiantRepository.findById(etudiantId).orElse(null);
-        Departement departement = departementRepository.findById(departementId).orElse(null);
-        etudiant.setDepartement(departement);
+        DepartementDTO departementDTO = departementRepository.findById(departementId).orElse(null);
+        etudiant.setDepartementDTO(departementDTO);
         etudiantRepository.save(etudiant);
 	}
 	@Transactional
 	public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe){
-		Contrat c=contratRepository.findById(idContrat).orElse(null);
+		ContratDTO c=contratRepository.findById(idContrat).orElse(null);
 		Equipe eq=equipeRepository.findById(idEquipe).orElse(null);
 		c.setEtudiant(e);
 		eq.getEtudiants().add(e);
 return e;
 	}
 
-	public 	List<Etudiant> getEtudiantsByDepartement (Integer idDepartement){
+	public 	List<Etudiant> getEtudiantsByDepartementDTO (Integer idDepartement){
 return  etudiantRepository.findEtudiantsByDepartement_IdDepart((idDepartement));
 	}
 }

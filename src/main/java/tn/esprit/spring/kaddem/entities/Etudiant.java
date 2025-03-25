@@ -22,10 +22,10 @@ public class Etudiant implements Serializable{
     private Option op;
     @OneToMany(mappedBy="etudiant", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Contrat> Contrats;
+    private Set<ContratDTO> contratsDTO;
     @ManyToOne
     @JsonIgnore
-    private Departement departement;
+    private DepartementDTO departementDTO;
   //  @ManyToMany(cascade =CascadeType.ALL)
     @ManyToMany(mappedBy="etudiants")
 
@@ -56,20 +56,20 @@ public class Etudiant implements Serializable{
         this.op = op;
     }
 
-    public Set<Contrat> getContrats() {
-        return Contrats;
+    public Set<ContratDTO> getContrats() {
+        return contratsDTO;
     }
 
-    public void setContrats(Set<Contrat> contrats) {
-        Contrats = contrats;
+    public void setContrats(Set<ContratDTO> contrats) {
+        contratsDTO = contrats;
     }
 
-    public Departement getDepartement() {
-        return departement;
+    public DepartementDTO getDepartementDTO() {
+        return departementDTO;
     }
 
-    public void setDepartement(Departement departement) {
-        this.departement = departement;
+    public void setDepartementDTO(DepartementDTO departement) {
+        this.departementDTO = departement;
     }
 
     public List<Equipe> getEquipes() {

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.ContratDTO;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
@@ -24,36 +24,36 @@ ContratRepository contratRepository;
 @Autowired
 	EtudiantRepository etudiantRepository;
 
-	public List<Contrat> retrieveAllContrats(){
+	public List<ContratDTO> retrieveAllContrats(){
 		return  contratRepository.findAll();
 	}
 
-	public Contrat updateContrat (Contrat  ce){
+	public ContratDTO updateContrat (ContratDTO  ce){
 		return contratRepository.save(ce);
 	}
 
-	public  Contrat addContrat (Contrat ce){
+	public  ContratDTO addContrat (ContratDTO ce){
 		return contratRepository.save(ce);
 	}
 
-	public Contrat retrieveContrat (Integer  idContrat){
+	public ContratDTO retrieveContrat (Integer  idContrat){
 		return contratRepository.findById(idContrat).orElse(null);
 	}
 
 	public  void removeContrat(Integer idContrat){
-		Contrat c=retrieveContrat(idContrat);
+		ContratDTO c=retrieveContrat(idContrat);
 		contratRepository.delete(c);
 	}
 
 
 
-	public Contrat affectContratToEtudiant (Integer idContrat, String nomE, String prenomE){
+	public ContratDTO affectContratToEtudiant (Integer idContrat, String nomE, String prenomE){
 		Etudiant e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
-		Contrat ce=contratRepository.findByIdContrat(idContrat);
-		Set<Contrat> contrats= e.getContrats();
+		ContratDTO ce=contratRepository.findByIdContrat(idContrat);
+		Set<ContratDTO> contrats= e.getContrats();
 		Integer nbContratssActifs=0;
 		if (contrats.size()!=0) {
-			for (Contrat contrat : contrats) {
+			for (ContratDTO contrat : contrats) {
 				if (((contrat.getArchive())!=null)&& ((contrat.getArchive())!=false))  {
 					nbContratssActifs++;
 				}
@@ -70,11 +70,11 @@ ContratRepository contratRepository;
 	}
 
 	public void retrieveAndUpdateStatusContrat() {
-		List<Contrat> contrats = contratRepository.findAll();
-		List<Contrat> contrats15j = new ArrayList<>(); // Initialize the list
-		List<Contrat> contratsAarchiver = new ArrayList<>(); // Initialize the list
+		List<ContratDTO> contrats = contratRepository.findAll();
+		List<ContratDTO> contrats15j = new ArrayList<>(); // Initialize the list
+		List<ContratDTO> contratsAarchiver = new ArrayList<>(); // Initialize the list
 
-		for (Contrat contrat : contrats) {
+		for (ContratDTO contrat : contrats) {
 			Date dateSysteme = new Date();
 			if (contrat.getArchive() == false) {
 				long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
@@ -97,9 +97,9 @@ ContratRepository contratRepository;
 		float difference_In_Time = endDate.getTime() - startDate.getTime();
 		float difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
 		float difference_In_months =difference_In_Days/30;
-        List<Contrat> contrats=contratRepository.findAll();
+        List<ContratDTO> contrats=contratRepository.findAll();
 		float chiffreAffaireEntreDeuxDates=0;
-		for (Contrat contrat : contrats) {
+		for (ContratDTO contrat : contrats) {
 			if (contrat.getSpecialite()== Specialite.IA){
 				chiffreAffaireEntreDeuxDates+=(difference_In_months*300);
 			} else if (contrat.getSpecialite()== Specialite.CLOUD) {

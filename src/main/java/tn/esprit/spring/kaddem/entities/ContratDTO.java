@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @ToString
-public class Contrat implements Serializable{
+public class ContratDTO implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer idContrat;
@@ -24,10 +24,10 @@ public class Contrat implements Serializable{
     @ManyToOne(cascade = CascadeType.ALL)
     private Etudiant etudiant;
 
-    public Contrat() {
+    public ContratDTO() {
     }
 
-    public Contrat(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, Boolean archive,
+    public ContratDTO(Date dateDebutContrat, Date dateFinContrat, Specialite specialite, Boolean archive,
                    Integer montantContrat) {
         super();
         this.dateDebutContrat = dateDebutContrat;
@@ -37,7 +37,7 @@ public class Contrat implements Serializable{
         this.montantContrat = montantContrat;
     }
 
-    public Contrat(Integer idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite,
+    public ContratDTO(Integer idContrat, Date dateDebutContrat, Date dateFinContrat, Specialite specialite,
                    Boolean archive, Integer montantContrat) {
         super();
         this.idContrat = idContrat;

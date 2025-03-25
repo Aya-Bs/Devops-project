@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.DepartementDTO;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 
 import java.util.List;
@@ -13,25 +13,27 @@ import java.util.List;
 
 @Service
 public class DepartementServiceImpl implements IDepartementService{
+
 	@Autowired
 	DepartementRepository departementRepository;
-	public List<Departement> retrieveAllDepartements(){
-		return (List<Departement>) departementRepository.findAll();
+
+	public List<DepartementDTO> retrieveAllDepartements(){
+		return departementRepository.findAll();
 	}
 
-	public Departement addDepartement (Departement d){
+	public DepartementDTO addDepartement (DepartementDTO d){
 		return departementRepository.save(d);
 	}
 
-	public   Departement updateDepartement (Departement d){
+	public   DepartementDTO updateDepartement (DepartementDTO d){
 		return departementRepository.save(d);
 	}
 
-	public  Departement retrieveDepartement (Integer idDepart){
+	public  DepartementDTO retrieveDepartement (Integer idDepart){
 		return departementRepository.findById(idDepart).get();
 	}
 	public  void deleteDepartement(Integer idDepartement){
-		Departement d=retrieveDepartement(idDepartement);
+		DepartementDTO d=retrieveDepartement(idDepartement);
 		departementRepository.delete(d);
 	}
 

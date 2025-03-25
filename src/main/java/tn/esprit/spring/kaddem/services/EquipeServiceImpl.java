@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.esprit.spring.kaddem.entities.Contrat;
+import tn.esprit.spring.kaddem.entities.ContratDTO;
 import tn.esprit.spring.kaddem.entities.Equipe;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Niveau;
@@ -48,9 +48,9 @@ public class EquipeServiceImpl implements IEquipeService{
 				List<Etudiant> etudiants = (List<Etudiant>) equipe.getEtudiants();
 				Integer nbEtudiantsAvecContratsActifs=0;
 				for (Etudiant etudiant : etudiants) {
-					Set<Contrat> contrats = etudiant.getContrats();
+					Set<ContratDTO> contrats = etudiant.getContrats();
 					//Set<Contrat> contratsActifs=null;
-					for (Contrat contrat : contrats) {
+					for (ContratDTO contrat : contrats) {
 						Date dateSysteme = new Date();
 						long difference_In_Time = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
 						long difference_In_Years = (difference_In_Time / (1000l * 60 * 60 * 24 * 365));

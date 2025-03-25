@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.entities.ContratDTO;
+import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.services.IContratService;
 
 import java.util.Date;
@@ -17,19 +17,19 @@ public class ContratRestController {
 	IContratService contratService;
 	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
 	@GetMapping("/retrieve-all-contrats")
-	public List<ContratDTO> getContrats() {
+	public List<Contrat> getContrats() {
 		return  contratService.retrieveAllContrats();
 	}
 	// http://localhost:8089/Kaddem/contrat/retrieve-contrat/8
 	@GetMapping("/retrieve-contrat/{contrat-id}")
-	public ContratDTO retrieveContrat(@PathVariable("contrat-id") Integer contratId) {
+	public Contrat retrieveContrat(@PathVariable("contrat-id") Integer contratId) {
 		return contratService.retrieveContrat(contratId);
 	}
 
 	// http://localhost:8089/Kaddem/contrat/add-contrat
 	@PostMapping("/add-contrat")
-	public ContratDTO addContrat(@RequestBody ContratDTO contrat) {
-		return contratService.addContrat(contrat);
+	public Contrat addContrat(@RequestBody Contrat contrat1) {
+		return contratService.addContrat(contrat1);
 	}
 
 	// http://localhost:8089/Kaddem/contrat/remove-contrat/1
@@ -40,13 +40,13 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/contrat/update-contrat
 	@PutMapping("/update-contrat")
-	public ContratDTO updateContrat(@RequestBody ContratDTO ce) {
+	public Contrat updateContrat(@RequestBody Contrat ce) {
 		return contratService.updateContrat(ce);
 	}
 
 
 	@PutMapping(value = "/assignContratToEtudiant/{idContrat}/{nomE}/{prenomE}")
-	public ContratDTO assignContratToEtudiant (@PathVariable Integer idContrat, @PathVariable String nomE, @PathVariable String prenomE){
+	public Contrat assignContratToEtudiant (@PathVariable Integer idContrat, @PathVariable String nomE, @PathVariable String prenomE){
 		return 	(contratService.affectContratToEtudiant(idContrat, nomE, prenomE));
 	}
 
