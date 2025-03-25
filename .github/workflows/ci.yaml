@@ -16,4 +16,4 @@ jobs:
       - name: Trigger Jenkins job
         run: |
           curl -X POST "https://d75f-197-238-231-61.ngrok-free.app/job/projet-devops/build" \
-          --user "admin:1132a14e099816b2788a12d252248031eb"
+          --user "nousseiba kaabi:1132a14e099816b2788a12d252248031eb"
