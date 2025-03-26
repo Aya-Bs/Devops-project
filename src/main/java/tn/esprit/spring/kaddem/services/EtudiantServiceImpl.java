@@ -15,6 +15,7 @@
 	import javax.persistence.EntityNotFoundException;
 	import javax.transaction.Transactional;
 	import java.util.List;
+	import java.util.Set;
 
 	@Service
 	@Slf4j
@@ -78,4 +79,5 @@
 		public 	List<Etudiant> getEtudiantsByDepartement (Integer idDepartement){
 	return  etudiantRepository.findEtudiantsByDepartement_IdDepart((idDepartement));
 		}
+
 	}
