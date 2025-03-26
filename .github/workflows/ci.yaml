@@ -1,19 +1,33 @@
-name: Jenkins CI Trigger
+name: CI/CD Pipeline Trigger
 
 on:
   push:
-    branches:
-      - noussa
+    branches: [noussa]
 
 jobs:
-  trigger-jenkins:
+  trigger-jenkins-build:
     runs-on: ubuntu-latest
+    env:
+      JENKINS_URL: https://5d41-197-238-231-61.ngrok-free.app
+      JENKINS_JOB: Kaddem
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Trigger Jenkins job
+      - name: Trigger Jenkins Pipeline
+        env:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         run: |
-          curl -X POST "https://5d41-197-238-231-61.ngrok-free.app/job/Kaddem/build" \
-          --user "noussa:1132a14e099816b2788a12d252248031eb"
+          # Get CSRF protection crumb
+          CRUMB=$(curl -s --user "$JENKINS_USER:$JENKINS_TOKEN" \
+            "$JENKINS_URL/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,':',//crumb)")
+          
+          # Trigger build with authentication
+          curl -v -X POST "$JENKINS_URL/job/$JENKINS_JOB/build" \
+            --user "$JENKINS_USER:$JENKINS_TOKEN" \
+            --header "$CRUMB" \
+            --header "Content-Type: application/xml" \
+            --retry 2 \
+            --retry-delay 10
