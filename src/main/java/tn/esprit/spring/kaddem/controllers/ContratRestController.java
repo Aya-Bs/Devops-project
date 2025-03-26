@@ -4,13 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.spring.kaddem.dto.ContratDTO;
 import tn.esprit.spring.kaddem.entities.Contrat;
-import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.services.IContratService;
-import tn.esprit.spring.kaddem.services.IEtudiantService;
 
-import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +16,7 @@ import java.util.List;
 public class ContratRestController {
 
 	IContratService contratService;
-	IEtudiantService etudiantService;
+
 	// http://localhost:8089/Kaddem/contrat/retrieve-all-contrats
 	@GetMapping("/retrieve-all-contrats")
 	public List<Contrat> getContrats() {
@@ -35,19 +31,7 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/econtrat/add-contrat
 	@PostMapping("/add-contrat")
-	public Contrat addContrat(@Valid @RequestBody ContratDTO contratDTO) {
-		// Convert DTO to Entity
-		Contrat contrat = new Contrat();
-		contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
-		contrat.setDateFinContrat(contratDTO.getDateFinContrat());
-		contrat.setSpecialite(contratDTO.getSpecialite());
-		contrat.setArchive(contratDTO.getArchive());
-		contrat.setMontantContrat(contratDTO.getMontantContrat());
-
-		// Fetch Etudiant by ID (handle in service layer)
-		Etudiant etudiant = etudiantService.retrieveEtudiant(contratDTO.getEtudiantId());
-		contrat.setEtudiant(etudiant);
-
+	public Contrat addContrat(@RequestBody Contrat contrat){
 		return contratService.addContrat(contrat);
 	}
 
@@ -61,24 +45,8 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/contrat/update-contrat
 	@PutMapping("/update-contrat")
-	public Contrat updateContrat(@Valid @RequestBody ContratDTO contratDTO) {
-		// 1. Fetch existing contract
-		Contrat existingContrat = contratService.retrieveContrat(contratDTO.getIdContrat());
-
-		// 2. Update only allowed fields from DTO
-		existingContrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
-		existingContrat.setDateFinContrat(contratDTO.getDateFinContrat());
-		existingContrat.setSpecialite(contratDTO.getSpecialite());
-		existingContrat.setArchive(contratDTO.getArchive());
-		existingContrat.setMontantContrat(contratDTO.getMontantContrat());
-
-		// 3. Handle student update
-		if (!existingContrat.getEtudiant().getIdEtudiant().equals(contratDTO.getEtudiantId())) {
-			Etudiant newEtudiant = etudiantService.retrieveEtudiant(contratDTO.getEtudiantId());
-			existingContrat.setEtudiant(newEtudiant);
-		}
-
-		return contratService.updateContrat(existingContrat);
+	public Contrat updateContrat(@RequestBody Contrat contrat) {
+		return contratService.updateContrat(contrat);
 	}
 
 

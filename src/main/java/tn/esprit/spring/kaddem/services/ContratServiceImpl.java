@@ -55,9 +55,9 @@ public class ContratServiceImpl implements IContratService{
 		Contrat ce=contratRepository.findByIdContrat(idContrat);
 		Set<Contrat> contrats= e.getContrats();
 		long nbContratssActifs=0;
-		if (contrats.isEmpty()==false) {
+		if (!(contrats.isEmpty())) {
 			for (Contrat contrat : contrats) {
-				if (((contrat.getArchive())!=null)&& (contrat.getArchive()==true)) {
+				if (((contrat.getArchive())!=null)&& (contrat.getArchive())) {
 					nbContratssActifs++;
 				}
 			}
@@ -77,7 +77,7 @@ public class ContratServiceImpl implements IContratService{
 		List<Contrat>contratsAarchiver=new ArrayList<>();
 		for (Contrat contrat : contrats) {
 			Date dateSysteme = new Date();
-			if (contrat.getArchive()==false) {
+			if (!(contrat.getArchive())) {
 				long differenceTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
 				long differenceDays = (differenceTime / (1000 * 60 * 60 * 24)) % 365;
 				if (differenceDays==15){
@@ -91,6 +91,7 @@ public class ContratServiceImpl implements IContratService{
 			}
 		}
 	}
+
 	public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
 		float differenceTime = (float) endDate.getTime() - startDate.getTime();
 		float differenceDays = (differenceTime / (1000 * 60 * 60 * 24)) % 365;

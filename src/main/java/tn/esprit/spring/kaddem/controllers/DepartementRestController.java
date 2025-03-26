@@ -3,7 +3,6 @@ package tn.esprit.spring.kaddem.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.kaddem.entities.Departement;
-import tn.esprit.spring.kaddem.dto.DepartementDTO;
 import tn.esprit.spring.kaddem.services.IDepartementService;
 
 import javax.validation.Valid;
@@ -27,12 +26,7 @@ public class DepartementRestController {
 
 	// http://localhost:8089/Kaddem/departement/add-departement
 	@PostMapping("/add-departement")
-	public Departement addDepartement(@Valid @RequestBody DepartementDTO departementDTO) {
-		// Convert DTO to Entity
-		Departement departement = new Departement();
-		departement.setNomDepart(departementDTO.getNomDepart());
-
-		// Call service layer
+	public Departement addDepartement(@RequestBody Departement departement) {
 		return departementService.addDepartement(departement);
 	}
 
@@ -45,10 +39,7 @@ public class DepartementRestController {
 
 	// http://localhost:8089/Kaddem/departement/update-departement
 	@PutMapping("/update-departement")
-	public Departement updateDepartement(@Valid @RequestBody DepartementDTO dto) {
-		Departement departement = new Departement();
-		departement.setIdDepart(dto.getIdDepart());
-		departement.setNomDepart(dto.getNomDepart());
+	public Departement updateDepartement(@Valid @RequestBody Departement departement) {
 		return departementService.updateDepartement(departement);
 	}
 }

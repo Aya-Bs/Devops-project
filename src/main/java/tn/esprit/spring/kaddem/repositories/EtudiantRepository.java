@@ -10,7 +10,8 @@ import java.util.List;
 
 @Repository
 public interface EtudiantRepository extends CrudRepository<Etudiant,Integer> {
-    public List<Etudiant> findEtudiantsByDepartement_IdDepart(Integer idDepart);
+     List<Etudiant> findEtudiantsByDepartement_IdDepart(Integer idDepart);
+
 @Query("Select e From Etudiant e where e.nomE= :nomE and e.prenomE= :prenomE")
-    public Etudiant findByNomEAndPrenomE(@Param("nomE") String nomE, @Param("prenomE") String prenomE);
+     Etudiant findByNomEAndPrenomE(@Param("nomE") String nomE, @Param("prenomE") String prenomE);
 }

@@ -51,7 +51,7 @@ class ContratServiceImplTest {
     @Test
     void retrieveAllContrats_ShouldReturnList() {
         // Arrange
-        List<Contrat> contrats = Arrays.asList(contrat);
+        List<Contrat> contrats = Collections.singletonList(contrat);
         when(contratRepository.findAll()).thenReturn(contrats);
 
         // Act
@@ -151,15 +151,14 @@ class ContratServiceImplTest {
     @Test
     void retrieveAndUpdateStatusContrat_ShouldUpdateStatus() {
         // Arrange
-        Contrat cont = new Contrat();
-        cont.setIdContrat(1);
-        cont.setArchive(false);
-        cont.setSpecialite(Specialite.IA);
-        cont.setDateDebutContrat(new Date()); // Set a valid start date
-        cont.setDateFinContrat(new Date()); // Set dateFinContrat to the current date to trigger archiving
-        cont.setMontantContrat(1000);
+        contrat.setIdContrat(1);
+        contrat.setArchive(false);
+        contrat.setSpecialite(Specialite.IA);
+        contrat.setDateDebutContrat(new Date()); // Set a valid start date
+        contrat.setDateFinContrat(new Date()); // Set dateFinContrat to the current date to trigger archiving
+        contrat.setMontantContrat(1000);
 
-        List<Contrat> contrats = Arrays.asList(contrat);
+        List<Contrat> contrats = Collections.singletonList(contrat);
         when(contratRepository.findAll()).thenReturn(contrats);
         when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
@@ -177,7 +176,7 @@ class ContratServiceImplTest {
         // Arrange
         Date startDate = new Date(); // Current date
         Date endDate = new Date(System.currentTimeMillis() + 86400000); // 1 day later
-        List<Contrat> contrats = Arrays.asList(contrat);
+        List<Contrat> contrats = Collections.singletonList(contrat);
         when(contratRepository.findAll()).thenReturn(contrats);
 
         // Act
