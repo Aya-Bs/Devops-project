@@ -25,7 +25,7 @@ public class EtudiantRestController {
 
 	// http://localhost:8089/Kaddem/etudiant/add-etudiant
 	@PostMapping("/add-etudiant")
-	public Etudiant addEtudiant(@RequestBody Etudiant e) { //NOSONAR
+	public Etudiant addEtudiant(@RequestBody Etudiant e) {
 
 		return etudiantService.addEtudiant(e);
 	}
@@ -38,7 +38,7 @@ public class EtudiantRestController {
 
 	// http://localhost:8089/Kaddem/etudiant/update-etudiant
 	@PutMapping("/update-etudiant")
-	public Etudiant updateEtudiant(@RequestBody Etudiant e) { //NOSONAR
+	public Etudiant updateEtudiant(@RequestBody Etudiant e) {
 		return etudiantService.updateEtudiant(e);
 
 	}
@@ -50,7 +50,7 @@ public class EtudiantRestController {
     }
 
     @PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
-    public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) { //NOSONAR
+    public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {
 return etudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContrat,idEquipe);
     }
 
