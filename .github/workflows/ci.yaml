@@ -18,7 +18,7 @@ jobs:
       - name: Trigger Jenkins Pipeline
         env:
           JENKINS_USER: noussa
-          JENKINS_TOKEN: :1132a14e099816b2788a12d252248031eb
+          JENKINS_TOKEN: 1132a14e099816b2788a12d252248031eb
         run: |
             curl -v -X POST "$JENKINS_URL/job/$JENKINS_JOB/build" \
             --user "$JENKINS_USER:$JENKINS_TOKEN" \
