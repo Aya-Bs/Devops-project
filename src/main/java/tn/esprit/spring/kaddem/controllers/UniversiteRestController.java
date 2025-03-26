@@ -14,7 +14,9 @@ import java.util.Set;
 @RequestMapping("/universite")
 public class UniversiteRestController {
 	IUniversiteService universiteService;
-	// http://localhost:8089/Kaddem/universite/retrieve-all-universites
+
+
+    // http://localhost:8089/Kaddem/universite/retrieve-all-universites
 	@GetMapping("/retrieve-all-universites")
 	public List<Universite> getUniversites() {
 		return universiteService.retrieveAllUniversites();
@@ -25,7 +27,9 @@ public class UniversiteRestController {
 		return universiteService.retrieveUniversite(universiteId);
 	}
 
-	// http://localhost:8089/Kaddem/universite/add-universite
+
+
+    // http://localhost:8089/Kaddem/universite/add-universite
 	@PostMapping("/add-universite")
 	public Universite addUniversite(@RequestBody Universite u) {
 		return universiteService.addUniversite(u);
@@ -40,7 +44,7 @@ public class UniversiteRestController {
 	// http://localhost:8089/Kaddem/universite/update-universite
 	@PutMapping("/update-universite")
 	public Universite updateUniversite(@RequestBody Universite u) {
-		return universiteService.updateUniversite(u);
+        return universiteService.updateUniversite(u);
 	}
 
 	//@PutMapping("/affecter-etudiant-departement")
