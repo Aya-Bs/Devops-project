@@ -10,6 +10,7 @@ import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Niveau;
 import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +39,9 @@ public class EquipeServiceImpl implements IEquipeService{
 		equipeRepository.delete(e);
 	}
 
-	public Equipe retrieveEquipe(Integer equipeId){
+	public Equipe retrieveEquipe(Integer equipeId) {
 		return equipeRepository.findById(equipeId)
-				.isPresent() ? equipeRepository.findById(equipeId).get() : null;
+				.orElseThrow(() -> new EntityNotFoundException("Equipe not found with id: " + equipeId));
 	}
 
 	public Equipe updateEquipe(Equipe e){

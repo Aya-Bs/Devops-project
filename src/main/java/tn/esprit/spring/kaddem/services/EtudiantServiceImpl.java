@@ -12,6 +12,7 @@
 	import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 	import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
+	import javax.persistence.EntityNotFoundException;
 	import javax.transaction.Transactional;
 	import java.util.List;
 
@@ -42,9 +43,11 @@
 			return etudiantRepository.save(e);
 		}
 
-		public Etudiant retrieveEtudiant(Integer idEtudiant){
+
+
+		public Etudiant retrieveEtudiant(Integer idEtudiant) {
 			return etudiantRepository.findById(idEtudiant)
-					.isPresent() ? etudiantRepository.findById(idEtudiant).get() : null;
+					.orElseThrow(() -> new EntityNotFoundException("Etudiant not found with id: " + idEtudiant));
 		}
 
 		public void removeEtudiant(Integer idEtudiant){

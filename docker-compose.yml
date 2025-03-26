@@ -41,7 +41,7 @@ services:
   sonarqube:
     image: sonarqube
     ports:
-      - "9001:9000"
+      - "9002:9000"
     volumes:
       - sonarQube_data:/opt/sonarqube/data
       - sonarQube_logs:/opt/sonarqube/logs
@@ -50,7 +50,7 @@ services:
   nexus:
     image: sonatype/nexus3
     ports:
-      - "8081:8081"
+      - "8083:8081"
     volumes:
       - nexus_data:/nexus-data
 
