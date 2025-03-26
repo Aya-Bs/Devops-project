@@ -17,17 +17,8 @@ jobs:
 
       - name: Trigger Jenkins Pipeline
         env:
-          JENKINS_USER: ${{ secrets.JENKINS_USER }}
-          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+          JENKINS_USER: noussa
+          JENKINS_TOKEN: :1132a14e099816b2788a12d252248031eb
         run: |
-          # Get CSRF protection crumb
-          CRUMB=$(curl -s --user "$JENKINS_USER:$JENKINS_TOKEN" \
-            "$JENKINS_URL/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,':',//crumb)")
-          
-          # Trigger build with authentication
-          curl -v -X POST "$JENKINS_URL/job/$JENKINS_JOB/build" \
+            curl -v -X POST "$JENKINS_URL/job/$JENKINS_JOB/build" \
             --user "$JENKINS_USER:$JENKINS_TOKEN" \
-            --header "$CRUMB" \
-            --header "Content-Type: application/xml" \
-            --retry 2 \
-            --retry-delay 10
