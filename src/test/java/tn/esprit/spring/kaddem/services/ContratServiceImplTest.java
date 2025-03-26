@@ -32,6 +32,8 @@ class ContratServiceImplTest {
     private Contrat contrat;
     private Etudiant etudiantDTO;
 
+
+
     @BeforeEach
     void setUp() {
         contrat = new Contrat();
