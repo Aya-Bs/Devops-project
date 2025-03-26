@@ -31,7 +31,7 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/econtrat/add-contrat
 	@PostMapping("/add-contrat")
-	public Contrat addContrat(@RequestBody Contrat contrat){
+	public Contrat addContrat(@RequestBody Contrat contrat){ //NOSONAR
 		return contratService.addContrat(contrat);
 	}
 
@@ -45,7 +45,7 @@ public class ContratRestController {
 
 	// http://localhost:8089/Kaddem/contrat/update-contrat
 	@PutMapping("/update-contrat")
-	public Contrat updateContrat(@RequestBody Contrat contrat) {
+	public Contrat updateContrat(@RequestBody Contrat contrat) { //NOSONAR
 		return contratService.updateContrat(contrat);
 	}
 

@@ -57,7 +57,7 @@ public class ContratServiceImpl implements IContratService{
 		long nbContratssActifs=0;
 		if (!(contrats.isEmpty())) {
 			for (Contrat contrat : contrats) {
-				if (((contrat.getArchive())!=null)&& (contrat.getArchive())) {
+				if (((contrat.getArchive())!=null)&& Boolean.TRUE.equals((contrat.getArchive()))) {
 					nbContratssActifs++;
 				}
 			}
@@ -77,7 +77,7 @@ public class ContratServiceImpl implements IContratService{
 		List<Contrat>contratsAarchiver=new ArrayList<>();
 		for (Contrat contrat : contrats) {
 			Date dateSysteme = new Date();
-			if (!(contrat.getArchive())) {
+			if (Boolean.FALSE.equals(contrat.getArchive())) {
 				long differenceTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
 				long differenceDays = (differenceTime / (1000 * 60 * 60 * 24)) % 365;
 				if (differenceDays==15){

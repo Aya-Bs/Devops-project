@@ -83,7 +83,7 @@ public class EquipeServiceImpl implements IEquipeService{
 
 	private boolean hasActiveContract(Etudiant etudiant) {
 		for (Contrat contrat : etudiant.getContrats()) {
-			if (!contrat.getArchive() && isContractOlderThanOneYear(contrat)) {
+			if (Boolean.FALSE.equals(contrat.getArchive()) && isContractOlderThanOneYear(contrat)) {
 				return true;
 			}
 		}

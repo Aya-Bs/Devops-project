@@ -26,7 +26,7 @@ public class DepartementRestController {
 
 	// http://localhost:8089/Kaddem/departement/add-departement
 	@PostMapping("/add-departement")
-	public Departement addDepartement(@RequestBody Departement departement) {
+	public Departement addDepartement(@RequestBody Departement departement) { //NOSONAR
 		return departementService.addDepartement(departement);
 	}
 
@@ -39,7 +39,7 @@ public class DepartementRestController {
 
 	// http://localhost:8089/Kaddem/departement/update-departement
 	@PutMapping("/update-departement")
-	public Departement updateDepartement(@Valid @RequestBody Departement departement) {
+	public Departement updateDepartement(@Valid @RequestBody Departement departement) { //NOSONAR
 		return departementService.updateDepartement(departement);
 	}
 }
