@@ -26,9 +26,9 @@ public class ContratServiceImpl implements IContratService{
 		this.contratRepository = contratRepository;
 		this.etudiantRepository = etudiantRepository;
 	}
-	
+
 	public List<Contrat> retrieveAllContrats(){
-		return (List<Contrat>) contratRepository.findAll();
+		return  contratRepository.findAll();
 	}
 
 	public Contrat updateContrat (Contrat  ce){
@@ -54,8 +54,8 @@ public class ContratServiceImpl implements IContratService{
 		Etudiant e=etudiantRepository.findByNomEAndPrenomE(nomE, prenomE);
 		Contrat ce=contratRepository.findByIdContrat(idContrat);
 		Set<Contrat> contrats= e.getContrats();
-		Integer nbContratssActifs=0;
-		if (contrats.size()!=0) {
+		long nbContratssActifs=0;
+		if (!contrats.isEmpty()) {
 			for (Contrat contrat : contrats) {
 				if (((contrat.getArchive())!=null)&& (contrat.getArchive())) {
 					nbContratssActifs++;
@@ -82,7 +82,6 @@ public class ContratServiceImpl implements IContratService{
 				long differenceDays = (differenceTime / (1000 * 60 * 60 * 24)) % 365;
 				if (differenceDays==15){
 					contrats15j.add(contrat);
-					log.info(" Contrat : " + contrat);
 				}
 				if (differenceDays==0) {
 					contratsAarchiver.add(contrat);

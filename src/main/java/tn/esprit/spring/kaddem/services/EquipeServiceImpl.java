@@ -1,6 +1,5 @@
 package tn.esprit.spring.kaddem.services;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -41,7 +39,8 @@ public class EquipeServiceImpl implements IEquipeService{
 	}
 
 	public Equipe retrieveEquipe(Integer equipeId){
-		return equipeRepository.findById(equipeId).get();
+		return equipeRepository.findById(equipeId)
+				.isPresent() ? equipeRepository.findById(equipeId).get() : null;
 	}
 
 	public Equipe updateEquipe(Equipe e){
@@ -93,7 +92,7 @@ public class EquipeServiceImpl implements IEquipeService{
 	private boolean isContractOlderThanOneYear(Contrat contrat) {
 		Date dateSysteme = new Date();
 		long differenceTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
-		long differenceYears = (differenceTime / (1000l * 60 * 60 * 24 * 365));
+		long differenceYears = (differenceTime / (1000L * 60 * 60 * 24 * 365));
 		return differenceYears > 1;
 	}
 

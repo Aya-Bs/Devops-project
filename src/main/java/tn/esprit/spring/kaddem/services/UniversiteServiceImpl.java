@@ -7,6 +7,7 @@ import tn.esprit.spring.kaddem.entities.Universite;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 import tn.esprit.spring.kaddem.repositories.UniversiteRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ return  (universiteRepository.save(u));
     }
 
   public Universite retrieveUniversite (Integer idUniversite){
-return universiteRepository.findById(idUniversite).get();
+return universiteRepository.findById(idUniversite).isPresent() ? universiteRepository.findById(idUniversite).get() : null;
     }
 
     public  void deleteUniversite(Integer idUniversite){
@@ -42,14 +43,16 @@ return universiteRepository.findById(idUniversite).get();
     }
 
     public void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement){
-        Universite u= universiteRepository.findById(idUniversite).orElse(null);
-        Departement d= departementRepository.findById(idDepartement).orElse(null);
-        u.getDepartements().add(d);
-        universiteRepository.save(u);
+        universiteRepository.findById(idUniversite)
+                .ifPresent(u -> departementRepository.findById(idDepartement)
+                        .ifPresent(d -> {
+                            u.getDepartements().add(d);
+                            universiteRepository.save(u);
+                        }));
     }
 
     public Set<Departement> retrieveDepartementsByUniversite(Integer idUniversite){
-Universite u=universiteRepository.findById(idUniversite).orElse(null);
-return u.getDepartements();
+        Universite u = universiteRepository.findById(idUniversite).orElse(null);
+        return u != null ? u.getDepartements() : Collections.emptySet();
     }
 }
