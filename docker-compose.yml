@@ -1,6 +1,7 @@
 services:
   mysqldb:
     image: mysql:5.7
+    container_name: mysqldb
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -20,9 +21,10 @@ services:
       mysqldb:
         condition: service_healthy
     image: nousseiba/kaddem:1.0.0
+    container_name: app-kaddem
     restart: on-failure
     ports:
-      - "8090:8090"
+      - "8092:8090"
     environment:
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysqldb:3306/kaddem?useSSL=false&createDatabaseIfNotExist=true"
       SPRING_DATASOURCE_USERNAME: "root"
@@ -33,6 +35,26 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    depends_on:
+      - prometheus
 
 
 
@@ -60,3 +82,4 @@ volumes:
   sonarQube_extensions:
   db:
   nexus_data:
+  grafana-storage:
