@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface IUniversiteService {
-    List<Universite> retrieveAllUniversites();
+   public List<Universite> retrieveAllUniversites();
 
     Universite addUniversite (Universite  u);
 
@@ -15,11 +15,11 @@ public interface IUniversiteService {
 
     Universite retrieveUniversite (Integer idUniversite);
 
-      void deleteUniversite(Integer idUniversite);
+    public  void deleteUniversite(Integer idUniversite);
 
-     void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement);
+    public void assignUniversiteToDepartement(Integer idUniversite, Integer idDepartement);
 
-     Set<Departement> retrieveDepartementsByUniversite(Integer idUniversite);
+    public Set<Departement> retrieveDepartementsByUniversite(Integer idUniversite);
 
 
 }

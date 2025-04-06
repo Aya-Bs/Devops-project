@@ -5,22 +5,18 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.kaddem.entities.Departement;
+import tn.esprit.spring.kaddem.entities.Equipe;
+import tn.esprit.spring.kaddem.repositories.ContratRepository;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Slf4j
 
 @Service
 public class DepartementServiceImpl implements IDepartementService{
-	private final DepartementRepository departementRepository;
-
 	@Autowired
-	public DepartementServiceImpl(DepartementRepository departementRepository) {
-		this.departementRepository = departementRepository;
-	}
-
+	DepartementRepository departementRepository;
 	public List<Departement> retrieveAllDepartements(){
 		return (List<Departement>) departementRepository.findAll();
 	}
@@ -33,11 +29,9 @@ public class DepartementServiceImpl implements IDepartementService{
 		return departementRepository.save(d);
 	}
 
-	public Departement retrieveDepartement(Integer idDepart) {
-		return departementRepository.findById(idDepart)
-				.orElseThrow(() -> new EntityNotFoundException("Departement not found with id: " + idDepart));
+	public  Departement retrieveDepartement (Integer idDepart){
+		return departementRepository.findById(idDepart).get();
 	}
-
 	public  void deleteDepartement(Integer idDepartement){
 		Departement d=retrieveDepartement(idDepartement);
 		departementRepository.delete(d);
