@@ -10,11 +10,6 @@ services:
       - "3308:3306"
     volumes:
       - db:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
-      interval: 5s
-      timeout: 10s
-      retries: 10
 
   app-kaddem:
     depends_on:
@@ -30,13 +25,7 @@ services:
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "root"
       SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8090/kaddem/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-
+      
 volumes:
   db:
 
