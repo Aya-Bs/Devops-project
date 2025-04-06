@@ -36,26 +36,7 @@ services:
       timeout: 10s
       retries: 5
 
-  sonarqube:
-    image: sonarqube
-    ports:
-      - "9002:9000"
-    volumes:
-      - sonarQube_data:/opt/sonarqube/data
-      - sonarQube_logs:/opt/sonarqube/logs
-      - sonarQube_extensions:/opt/sonarqube/extensions
-
-  nexus:
-    image: sonatype/nexus3
-    ports:
-      - "8083:8081"
-    volumes:
-      - nexus_data:/nexus-data
 
 volumes:
-  sonarQube_data:
-  sonarQube_logs:
-  sonarQube_extensions:
   db:
-  nexus_data:
-  grafana-storage:
+
