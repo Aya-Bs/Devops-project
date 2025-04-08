@@ -1,19 +1,24 @@
-name: Jenkins CI Trigger
+name: CI/CD Pipeline Trigger
 
 on:
   push:
-    branches:
-      - sarra-bennour  # Branche à surveiller (ajuste si nécessaire)
+    branches: [noussa]
 
 jobs:
-  trigger-jenkins:
+  trigger-jenkins-build:
     runs-on: ubuntu-latest
+    env:
+      JENKINS_URL:  https://e366-197-238-43-23.ngrok-free.app
+      JENKINS_JOB: Kaddem
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Trigger Jenkins job
+      - name: Trigger Jenkins Pipeline
+        env:
+          JENKINS_USER: noussa
+          JENKINS_TOKEN: 1132a14e099816b2788a12d252248031eb
         run: |
-          curl -X POST "https://98d2-196-203-207-178.ngrok-free.app/job/projet-devops/build" \
-          --user "admin:115858233081fdd33fa3766e6978a87d3c"
+          curl -v -X POST "$JENKINS_URL/job/$JENKINS_JOB/build" \
+          --user "$JENKINS_USER:$JENKINS_TOKEN" \
