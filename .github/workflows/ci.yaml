@@ -8,7 +8,7 @@ jobs:
   trigger-jenkins-build:
     runs-on: ubuntu-latest
     env:
-      JENKINS_URL:  https://e366-197-238-43-23.ngrok-free.app
+      JENKINS_URL:  https://c85f-197-238-43-23.ngrok-free.app
       JENKINS_JOB: Kaddem
 
     steps:
