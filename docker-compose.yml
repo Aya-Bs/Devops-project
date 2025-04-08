@@ -12,7 +12,7 @@ services:
       - "3306:3306"
 
   spring-app:
-    image: sarrabennour/kaddem:1.0.0
+    image: nousseiba/kadem:1.0.0
     container_name: kaddem-container
     restart: always
     depends_on:
