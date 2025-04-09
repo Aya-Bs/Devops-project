@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
+import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
 import java.util.*;
 
@@ -20,6 +21,8 @@ class ContratServiceImplTest {
     @Mock
     private ContratRepository contratRepository;
 
+    @Mock
+    private EtudiantRepository etudiantRepository;
 
     @InjectMocks
     private ContratServiceImpl contratService;
@@ -35,7 +38,7 @@ class ContratServiceImplTest {
 
     @Test
     void retrieveAllContrats_ShouldReturnList() {
-        List<Contrat> contrats = Collections.singletonList(contrat);
+        List<Contrat> contrats = Arrays.asList(contrat);
         when(contratRepository.findAll()).thenReturn(contrats);
 
         List<Contrat> result = contratService.retrieveAllContrats();
