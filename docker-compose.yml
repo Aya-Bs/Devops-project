@@ -18,7 +18,7 @@ services:
     depends_on:
       - mysqldb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/kaddem?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/kaddem?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
