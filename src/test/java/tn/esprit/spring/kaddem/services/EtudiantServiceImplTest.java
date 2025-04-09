@@ -20,7 +20,8 @@ import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EtudiantServiceImplTest {
@@ -44,7 +45,7 @@ class EtudiantServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        etudiant = new Etudiant("sarra", "Bennour");
+        etudiant = new Etudiant("noussa", "kaabi");
         etudiant.setIdEtudiant(1);
     }
 
