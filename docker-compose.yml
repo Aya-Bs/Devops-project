@@ -1,42 +1,26 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  mysqldb:
+  mysql-db:
     image: mysql:8
-    container_name: mysql-kaddem
-    restart: unless-stopped
+    container_name: mysql-container
+    restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=kaddem
+      MYSQL_ROOT_PASSWORD: ""  # Set to empty string
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # Allow empty password
+      MYSQL_DATABASE: db  # Database name
     ports:
-      - "3306:3306"
-    volumes:
-      - db:/var/lib/mysql
-    networks:
-      - springboot-mysql-net
+      - "3307:3306"  # Expose MySQL port
 
-  app-kaddem:
+  spring-app:
     image: liliajemai/khaddem:1.0.0
-    container_name: khaddem-app
-    restart: on-failure
-    ports:
-      - "8089:8089"
-    environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url" : "jdbc:mysql://mysqldb:3307/kaddem?createDatabaseIfNotExist=true",
-        "spring.datasource.username" : "root",
-        "spring.datasource.password" : "root",
-        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
-        "spring.jpa.hibernate.ddl-auto" : "update"
-      }'
+    container_name: kaddem-container
+    restart: always
     depends_on:
-      - mysqldb
-    networks:
-      - springboot-mysql-net
-
-volumes:
-  db:
-
-networks:
-  springboot-mysql-net:
-    driver: bridge
+      - mysql-db  # Ensure MySQL starts first
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3307/db?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""  # Set to empty string
+    ports:
+      - "8089:8089"  # Expose Spring app port
