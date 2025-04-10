@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    image: mysql:8
+    container_name: mysql-kaddem
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=kaddem
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - springboot-mysql-net
+
+  app-kaddem:
+    image: liliajemai/khaddem:1.0.0
+    container_name: khaddem-app
+    restart: on-failure
+    ports:
+      - "8089:8089"
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysqldb:3307/kaddem?createDatabaseIfNotExist=true",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.jpa.hibernate.ddl-auto" : "update"
+      }'
+    depends_on:
+      - mysqldb
+    networks:
+      - springboot-mysql-net
+
+volumes:
+  db:
+
+networks:
+  springboot-mysql-net:
+    driver: bridge
