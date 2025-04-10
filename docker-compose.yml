@@ -8,19 +8,28 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=kaddem
     ports:
-      - "3306:3306"
+      - "3307:3306"  # Host:3307 → Container:3306
     volumes:
       - db:/var/lib/mysql
     networks:
-      - springboot-mysql-net
+      - app-network  # Unifié sur le même réseau
 
   app-kaddem:
     image: sarrahsahli/kaddem:latest
     restart: on-failure
     ports:
-      - "8085:8085"
+      - "8089:8089"  # Changé de 8085 à 8089 pour correspondre au port de Tomcat
+    expose:
+      - "8089"
     environment:
       SPRING_APPLICATION_JSON: '{
+        "server.port": 8089,
+        "server.servlet.context-path": "/kaddem",
+        "management.endpoints.web.base-path": "/actuator",
+        "management.endpoints.web.exposure.include": "*",
+        "management.endpoint.health.show-details": "always",
+        "management.metrics.export.prometheus.enabled": true,
+        "management.endpoint.prometheus.enabled": true,
         "spring.datasource.url" : "jdbc:mysql://mysqldb:3306/kaddem?createDatabaseIfNotExist=true",
         "spring.datasource.username" : "root",
         "spring.datasource.password" : "root",
@@ -30,11 +39,37 @@ services:
     depends_on:
       - mysqldb
     networks:
-      - springboot-mysql-net
+      - app-network  # Unifié sur le même réseau
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    depends_on:
+      - app-kaddem
+    networks:
+      - app-network
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=Sarahsahli123.
+    depends_on:
+      - prometheus
+    networks:
+      - app-network
 
 volumes:
   db:
 
 networks:
-  springboot-mysql-net:
+  app-network:
     driver: bridge
+    name: app-network
