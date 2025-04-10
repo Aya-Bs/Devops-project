@@ -4,7 +4,8 @@ stage('Docker Compose Up') {
             echo "🚀 Lancement des conteneurs avec Docker Compose..."
             try {
                 sh """
-                    docker-compose down || true
+                    docker-compose down --remove-orphans || true
+                    docker ps -a | grep kaddem | awk '{print \$1}' | xargs -r docker rm -f
                     docker-compose up -d
                 """
             } catch (Exception e) {
