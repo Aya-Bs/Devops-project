@@ -10,7 +10,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # Allow empty password
       MYSQL_DATABASE: db  # Database name
     ports:
-      - "3307:3306"  # Expose MySQL port
+      - "3307:3307"  # Expose MySQL port
 
   spring-app:
     image: liliajemai/khaddem:1.0.0
