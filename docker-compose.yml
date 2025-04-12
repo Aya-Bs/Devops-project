@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-db"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "mysql-db" ]
       interval: 5s
       timeout: 10s
       retries: 20
@@ -49,9 +49,6 @@ services:
       - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning:/etc/grafana/provisioning
-    environment:
-      GF_SECURITY_ADMIN_PASSWORD: "admin"
 
 volumes:
   grafana-data:
