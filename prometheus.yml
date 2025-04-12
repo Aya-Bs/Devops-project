@@ -6,10 +6,10 @@ scrape_configs:
   - job_name: 'spring-boot'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['spring-app:8089']
+      - targets: ['spring-app:8081']
         labels:
           application: 'kaddem-app'
 
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['prometheus:9090']
