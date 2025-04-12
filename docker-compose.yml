@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem
     ports:
-      - "3307:3306"
+      - "3306:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 5s
@@ -18,7 +18,7 @@ services:
 
   pro-kaddem:
     image: nousseiba/kaddem:1.0.0
-    container_name: pro-kaddem
+    container_name: kaddem
     restart: always
     depends_on:
       sqldb:
@@ -28,7 +28,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
-      - "8090:8089"
+      - "8089:8089"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8089/actuator/health"]
       interval: 10s
