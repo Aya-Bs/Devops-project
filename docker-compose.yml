@@ -9,9 +9,9 @@ services:
     ports:
       - "3307:3306"
 
-  app-kaddem:
+  pro-kaddem:
     image: nousseiba/kaddem:1.0.0
-    container_name: app-kaddem
+    container_name: pro-kaddem
     restart: always
     depends_on:
       - sqldb
