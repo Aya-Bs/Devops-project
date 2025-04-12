@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   sqldb:
     image: mysql:5.7
@@ -8,16 +10,27 @@ services:
       MYSQL_DATABASE: kaddem
     ports:
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   pro-kaddem:
     image: nousseiba/kaddem:1.0.0
     container_name: pro-kaddem
     restart: always
     depends_on:
-      - sqldb
+      sqldb:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://sqldb:3306/kaddem?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://sqldb:3306/kaddem?useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
       - "8090:8089"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8089/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
