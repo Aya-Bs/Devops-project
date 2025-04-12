@@ -1,7 +1,7 @@
 services:
-  mysqldb:
+  sqldb:
     image: mysql:5.7
-    container_name: mysqldb
+    container_name: sqldb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -14,9 +14,9 @@ services:
     container_name: app-kaddem
     restart: always
     depends_on:
-      - mysqldb
+      - sqldb
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/kaddem?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://sqldb:3306/kaddem?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     ports:
