@@ -24,3 +24,20 @@ services:
       SPRING_DATASOURCE_PASSWORD: ""  # Set to empty string
     ports:
       - "8089:8089"  # Expose Spring app port
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-container
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - spring-app
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    restart: always
