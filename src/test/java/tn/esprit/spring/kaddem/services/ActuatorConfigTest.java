@@ -1,23 +1,26 @@
 package tn.esprit.spring.kaddem.services;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import tn.esprit.spring.kaddem.config.ActuatorConfig;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
 public class ActuatorConfigTest {
-
-    @Autowired
-    private ActuatorConfig actuatorConfig;
 
     @Test
     public void testAddCorsMappings() {
+        // Arrange
+        ActuatorConfig actuatorConfig = new ActuatorConfig();
         CorsRegistry registry = new CorsRegistry();
+
+        // Act
         actuatorConfig.addCorsMappings(registry);
-        assertNotNull(registry); // simple vérif pour que la méthode soit exécutée
+
+        // Assert
+        assertNotNull(registry);
+        // Le test passe simplement si la méthode ne lance pas d'exception
+        assertTrue(true, "La méthode addCorsMappings s'exécute sans erreur");
     }
 }

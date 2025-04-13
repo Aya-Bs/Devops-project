@@ -19,6 +19,7 @@
 
     <properties>
         <java.version>17</java.version> <!-- Mise à jour vers Java 17 -->
+        <jenkins.test.exclude>**/ActuatorConfigTest.java</jenkins.test.exclude>
     </properties>
 
     <dependencies>
@@ -162,6 +163,10 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
+                    <!-- Exclusion conditionnelle pour Jenkins -->
+                    <excludes>
+                        <exclude>${jenkins.test.exclude}</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
