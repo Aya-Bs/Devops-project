@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   database:
     image: mysql:5.7
@@ -17,12 +15,12 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "database"]
       interval: 5s
       timeout: 10s
-      retries: 20  # Increased retries
+      retries: 20  
     networks:
       - kaddem-net
 
   pro-kaddem:
-    image: kaddem:1.0.0
+    image: nousseiba/kaddem:1.0.0
     container_name: kaddem-app
     restart: unless-stopped
     depends_on:
