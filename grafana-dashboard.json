@@ -1,0 +1,86 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": null,
+    "title": "Spring Boot Metrics",
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 0,
+    "refresh": "30s",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "JVM Memory Used",
+        "targets": [
+          {
+            "expr": "jvm_memory_used_bytes{area=\"heap\"}",
+            "legendFormat": "{{area}}",
+            "refId": "A"
+          }
+        ],
+        "id": 1,
+        "datasource": "Prometheus",
+        "xaxis": { "show": true },
+        "yaxes": [
+          { "format": "bytes", "label": "Bytes", "show": true },
+          { "format": "short", "show": true }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "CPU Usage",
+        "targets": [
+          {
+            "expr": "process_cpu_usage",
+            "legendFormat": "CPU Usage",
+            "refId": "A"
+          }
+        ],
+        "id": 2,
+        "datasource": "Prometheus",
+        "xaxis": { "show": true },
+        "yaxes": [
+          { "format": "percent", "label": "%", "show": true },
+          { "format": "short", "show": true }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "HTTP Requests",
+        "targets": [
+          {
+            "expr": "rate(http_server_requests_seconds_count[1m])",
+            "legendFormat": "{{uri}}",
+            "refId": "A"
+          }
+        ],
+        "id": 3,
+        "datasource": "Prometheus",
+        "xaxis": { "show": true },
+        "yaxes": [
+          { "format": "ops", "label": "Requests/sec", "show": true },
+          { "format": "short", "show": true }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Application Uptime",
+        "targets": [
+          {
+            "expr": "up{job=\"kaddem-app\"}",
+            "legendFormat": "Uptime",
+            "refId": "A"
+          }
+        ],
+        "id": 4,
+        "datasource": "Prometheus",
+        "xaxis": { "show": true },
+        "yaxes": [
+          { "format": "short", "label": "Status", "show": true },
+          { "format": "short", "show": true }
+        ]
+      }
+    ]
+  },
+  "overwrite": true
+}
