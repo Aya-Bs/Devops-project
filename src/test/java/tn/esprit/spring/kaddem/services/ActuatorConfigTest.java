@@ -7,10 +7,10 @@ import tn.esprit.spring.kaddem.config.ActuatorConfig;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ActuatorConfigTest {
+class ActuatorConfigTest {
 
     @Test
-    public void testAddCorsMappings() {
+    void testAddCorsMappings() {
         // Arrange
         ActuatorConfig actuatorConfig = new ActuatorConfig();
         CorsRegistry registry = new CorsRegistry();

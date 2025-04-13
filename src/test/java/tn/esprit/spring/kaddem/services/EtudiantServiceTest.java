@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.kaddem.entities.*;
 import tn.esprit.spring.kaddem.repositories.*;
@@ -240,4 +240,4 @@ class EtudiantServiceTest {
         assertTrue(result.isEmpty());
         verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(1);
     }
-} 
+}
