@@ -13,6 +13,7 @@ import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,8 +34,8 @@ class EtudiantServiceTest {
     void setUp() {
         etudiant = new Etudiant();
         etudiant.setIdEtudiant(1);
-        etudiant.setNomEt("Test");
-        etudiant.setPrenomEt("User");
+        etudiant.setNomE("Test");
+        etudiant.setPrenomE("User");
     }
 
     @Test
@@ -99,12 +100,27 @@ class EtudiantServiceTest {
     @Test
     void testRemoveEtudiant() {
         // Given
-        doNothing().when(etudiantRepository).deleteById(anyInt());
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
+        doNothing().when(etudiantRepository).delete(etudiant);
 
         // When
         etudiantService.removeEtudiant(1);
 
         // Then
-        verify(etudiantRepository, times(1)).deleteById(anyInt());
+        verify(etudiantRepository, times(1)).findById(1);
+        verify(etudiantRepository, times(1)).delete(etudiant);
+    }
+
+    @Test
+    void testRemoveEtudiantNotFound() {
+        // Given
+        when(etudiantRepository.findById(1)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.removeEtudiant(1);
+        });
+        verify(etudiantRepository, times(1)).findById(1);
+        verify(etudiantRepository, never()).delete(any());
     }
 } 
