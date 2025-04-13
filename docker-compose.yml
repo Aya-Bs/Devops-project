@@ -53,7 +53,7 @@ services:
     container_name: prometheus-kaddem
     restart: unless-stopped
     ports:
-      - "9092:9090"
+      - "9099:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
@@ -64,7 +64,7 @@ services:
     container_name: grafana-kaddem
     restart: unless-stopped
     ports:
-      - "3005:3000"
+      - "3009:3000"
     environment:
       GF_SECURITY_ADMIN_PASSWORD: "admin"
     depends_on:
