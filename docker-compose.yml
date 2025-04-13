@@ -38,7 +38,7 @@ services:
     ports:
       - "8093:8089"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8089/actuator/health || exit 1"]  # Fixed endpoint
+      test: [ "CMD-SHELL", "curl -f http://localhost:8089/kaddem/actuator/health || exit 1" ]
       interval: 10s
       timeout: 10s  # Increased timeout
       retries: 20   # Increased retries

@@ -21,7 +21,7 @@ COPY --from=builder --chown=spring:spring /app/application/ ./
 
 # Health check (will be overridden by compose)
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD curl -f http://localhost:8089/actuator/health || exit 1
+    CMD curl -f http://localhost:8089/kaddem/actuator/health || exit 1
 
 USER spring:spring
 
