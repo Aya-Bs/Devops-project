@@ -18,6 +18,7 @@ import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -177,5 +178,86 @@ public class EtudiantServiceImplTest {
         assertEquals(1, result.size());
         assertEquals(etudiant.getIdEtudiant(), result.get(0).getIdEtudiant());
         verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(1);
+    }
+
+    @Test
+    void testRetrieveEtudiantNotFound() {
+        // Arrange
+        when(etudiantRepository.findById(999)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.retrieveEtudiant(999);
+        });
+        verify(etudiantRepository, times(1)).findById(999);
+    }
+
+    @Test
+    void testRemoveEtudiantNotFound() {
+        // Arrange
+        when(etudiantRepository.findById(999)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.removeEtudiant(999);
+        });
+        verify(etudiantRepository, times(1)).findById(999);
+        verify(etudiantRepository, never()).delete(any());
+    }
+
+    @Test
+    void testAssignEtudiantToDepartementWithInvalidIds() {
+        // Arrange
+        when(etudiantRepository.findById(999)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.assignEtudiantToDepartement(999, 999);
+        });
+        verify(etudiantRepository, times(1)).findById(999);
+        verify(departementRepository, never()).findById(anyInt());
+    }
+
+    @Test
+    void testAddAndAssignEtudiantToEquipeAndContractWithInvalidIds() {
+        // Arrange
+        when(contratRepository.findById(999)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 999, 999);
+        });
+        verify(contratRepository, times(1)).findById(999);
+        verify(equipeRepository, never()).findById(anyInt());
+    }
+
+    @Test
+    void testGetEtudiantsByDepartementEmpty() {
+        // Arrange
+        when(etudiantRepository.findEtudiantsByDepartement_IdDepart(999)).thenReturn(new ArrayList<>());
+
+        // Act
+        List<Etudiant> result = etudiantService.getEtudiantsByDepartement(999);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(999);
+    }
+
+    @Test
+    void testUpdateEtudiantWithNullData() {
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.updateEtudiant(null);
+        });
+    }
+
+    @Test
+    void testAddEtudiantWithNullData() {
+        // Act & Assert
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.addEtudiant(null);
+        });
     }
 } 
