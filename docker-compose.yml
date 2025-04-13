@@ -3,45 +3,48 @@ version: '3.8'
 services:
   database:
     image: mysql:5.7
-    container_name: kaddem-db  # Explicit naming
+    container_name: kaddem-db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem
-      TZ: UTC  # Timezone synchronization
+      TZ: UTC
     ports:
       - "3308:3306"
     volumes:
-      - mysql_data:/var/lib/mysql  # Persistent storage
+      - mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 5s
       timeout: 10s
-      retries: 10
+      retries: 20  # Increased retries
     networks:
       - kaddem-net
 
   pro-kaddem:
-    image: kaddem:1.0.0  # Using local image
+    image: kaddem:1.0.0
     container_name: kaddem-app
     restart: unless-stopped
     depends_on:
       database:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/kaddem?useSSL=false&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/kaddem?useSSL=false&createDatabaseIfNotExist=true&autoReconnect=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-      SPRING_PROFILES_ACTIVE: docker  # Optional profile
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_LIQUIBASE_ENABLED: "true"  # If using Liquibase
+      WAIT_FOR_DB: "true"  # Custom property if needed
     ports:
       - "8093:8089"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8089/kaddem/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8089/actuator/health || exit 1"]  # Fixed endpoint
       interval: 10s
-      timeout: 5s
-      retries: 3
+      timeout: 10s  # Increased timeout
+      retries: 20   # Increased retries
+      start_period: 60s  # Give app time to start
     volumes:
-      - ./logs:/app/logs  # Map application logs
+      - ./logs:/app/logs
     networks:
       - kaddem-net
 
@@ -51,4 +54,3 @@ volumes:
 networks:
   kaddem-net:
     driver: bridge
-    name: kaddem-network  # Explicit network naming

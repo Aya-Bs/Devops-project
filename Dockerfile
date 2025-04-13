@@ -1,4 +1,4 @@
-# Multi-stage build for smaller final image
+# Multi-stage build
 FROM openjdk:17-jdk-alpine as builder
 WORKDIR /app
 COPY target/kaddem-0.0.1.jar app.jar
@@ -8,25 +8,21 @@ RUN java -Djarmode=layertools -jar app.jar extract
 FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
-# Create non-root user
-RUN addgroup -S spring && adduser -S spring -G spring
+# Create user and directories
+RUN addgroup -S spring && adduser -S spring -G spring && \
+    mkdir -p /app/logs && \
+    chown -R spring:spring /app
 
-# Copy application layers from builder
-COPY --from=builder /app/dependencies/ ./
-COPY --from=builder /app/spring-boot-loader/ ./
-COPY --from=builder /app/snapshot-dependencies/ ./
-COPY --from=builder /app/application/ ./
+# Copy layers
+COPY --from=builder --chown=spring:spring /app/dependencies/ ./
+COPY --from=builder --chown=spring:spring /app/spring-boot-loader/ ./
+COPY --from=builder --chown=spring:spring /app/snapshot-dependencies/ ./
+COPY --from=builder --chown=spring:spring /app/application/ ./
 
-# Create logs directory with proper permissions
-RUN mkdir -p /app/logs && \
-    chown -R spring:spring /app && \
-    chmod -R 755 /app/logs
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-    CMD curl -f http://localhost:8089/kaddem/actuator/health || exit 1
+# Health check (will be overridden by compose)
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD curl -f http://localhost:8089/actuator/health || exit 1
 
 USER spring:spring
 
-# Optimized JVM launch
 ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-Djava.security.egd=file:/dev/./urandom", "org.springframework.boot.loader.JarLauncher"]
