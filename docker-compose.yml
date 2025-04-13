@@ -8,9 +8,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: db
+      MYSQL_DATABASE: kaddem
     ports:
-      - "3307:3306"  # Exposé sur l'hôte (localhost:3307), mais toujours 3306 en interne
+      - "3307:3306"  # Port externe 3307 mappé au port interne 3306
+    networks:
+      - kaddem-net
 
   spring-app:
     image: liliajemai/khaddem:1.0.0
@@ -22,5 +24,16 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/kaddem?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5Dialect
+      SERVER_PORT: 8089
+      SERVER_SERVLET_CONTEXT_PATH: /kaddem
     ports:
       - "8089:8089"
+    networks:
+      - kaddem-net
+
+networks:
+  kaddem-net:
+    driver: bridge
