@@ -18,6 +18,7 @@ import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -239,5 +240,125 @@ class EtudiantServiceTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(etudiantRepository, times(1)).findEtudiantsByDepartement_IdDepart(1);
+    }
+
+    @Test
+    void testAddEtudiantWithNullEtudiant() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.addEtudiant(null);
+        });
+    }
+
+    @Test
+    void testUpdateEtudiantWithNullEtudiant() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.updateEtudiant(null);
+        });
+    }
+
+    @Test
+    void testUpdateEtudiantWithNullId() {
+        // Given
+        Etudiant etudiantSansId = new Etudiant();
+        etudiantSansId.setNomE("Test");
+        etudiantSansId.setPrenomE("User");
+
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.updateEtudiant(etudiantSansId);
+        });
+    }
+
+    @Test
+    void testRetrieveEtudiantWithNullId() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.retrieveEtudiant(null);
+        });
+    }
+
+    @Test
+    void testRemoveEtudiantWithNullId() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.removeEtudiant(null);
+        });
+    }
+
+    @Test
+    void testAssignEtudiantToDepartementWithNullIds() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.assignEtudiantToDepartement(null, 1);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.assignEtudiantToDepartement(1, null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.assignEtudiantToDepartement(null, null);
+        });
+    }
+
+    @Test
+    void testAddAndAssignEtudiantToEquipeAndContractWithNullParams() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.addAndAssignEtudiantToEquipeAndContract(null, 1, 1);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, null, 1);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, null);
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.addAndAssignEtudiantToEquipeAndContract(null, null, null);
+        });
+    }
+
+    @Test
+    void testGetEtudiantsByDepartementWithNullId() {
+        // When & Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            etudiantService.getEtudiantsByDepartement(null);
+        });
+    }
+
+    @Test
+    void testAssignEtudiantToDepartementDepartementNotFound() {
+        // Given
+        when(etudiantRepository.findById(1)).thenReturn(Optional.of(etudiant));
+        when(departementRepository.findById(1)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.assignEtudiantToDepartement(1, 1);
+        });
+
+        verify(etudiantRepository, times(1)).findById(1);
+        verify(departementRepository, times(1)).findById(1);
+        verify(etudiantRepository, never()).save(any(Etudiant.class));
+    }
+
+    @Test
+    void testAddAndAssignEtudiantToEquipeAndContractEquipeNotFound() {
+        // Given
+        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
+        when(equipeRepository.findById(1)).thenReturn(Optional.empty());
+
+        // When & Then
+        assertThrows(NoSuchElementException.class, () -> {
+            etudiantService.addAndAssignEtudiantToEquipeAndContract(etudiant, 1, 1);
+        });
+
+        verify(contratRepository, times(1)).findById(1);
+        verify(equipeRepository, times(1)).findById(1);
     }
 }
