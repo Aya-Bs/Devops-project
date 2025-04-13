@@ -3,34 +3,52 @@ version: '3.8'
 services:
   database:
     image: mysql:5.7
-    container_name: database
-    restart: always
+    container_name: kaddem-db  # Explicit naming
+    restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: kaddem
+      TZ: UTC  # Timezone synchronization
     ports:
       - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persistent storage
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 5s
       timeout: 10s
       retries: 10
+    networks:
+      - kaddem-net
 
   pro-kaddem:
-    image: nousseiba/kaddem:1.0.0
-    container_name: kaddem
-    restart: always
+    image: kaddem:1.0.0  # Using local image
+    container_name: kaddem-app
+    restart: unless-stopped
     depends_on:
       database:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/kaddem?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/kaddem?useSSL=false&createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      SPRING_PROFILES_ACTIVE: docker  # Optional profile
     ports:
       - "8093:8089"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8089/actuator/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8089/kaddem/actuator/health || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 3
+    volumes:
+      - ./logs:/app/logs  # Map application logs
+    networks:
+      - kaddem-net
+
+volumes:
+  mysql_data:
+
+networks:
+  kaddem-net:
+    driver: bridge
+    name: kaddem-network  # Explicit network naming
