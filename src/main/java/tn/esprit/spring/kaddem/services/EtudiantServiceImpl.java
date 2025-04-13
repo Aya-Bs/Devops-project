@@ -63,7 +63,7 @@ public class EtudiantServiceImpl implements IEtudiantService {
 		}
 		if (e.getIdEtudiant() == null) {
 			log.error("Tentative de mise à jour d'un étudiant sans ID");
-			throw new IllegalArgumentException("L'ID de l'étudiant ne peut pas être null");
+			throw new IllegalArgumentException("L'ID de l'étudiant ne peut pas être null§§");
 		}
 		log.info("Mise à jour de l'étudiant ID : {}", e.getIdEtudiant());
 		return etudiantRepository.save(e);
@@ -73,7 +73,7 @@ public class EtudiantServiceImpl implements IEtudiantService {
 	public Etudiant retrieveEtudiant(Integer idEtudiant) {
 		if (idEtudiant == null) {
 			log.error("Tentative de récupération d'un étudiant avec un ID null");
-			throw new IllegalArgumentException("L'ID de l'étudiant ne peut pas être null");
+			throw new IllegalArgumentException("Lid de l'étudiant ne peut pas être null");
 		}
 		log.info("Récupération de l'étudiant ID : {}", idEtudiant);
 		return etudiantRepository.findById(idEtudiant)
@@ -87,7 +87,7 @@ public class EtudiantServiceImpl implements IEtudiantService {
 	public void removeEtudiant(Integer idEtudiant) {
 		if (idEtudiant == null) {
 			log.error("Tentative de suppression d'un étudiant avec un ID null");
-			throw new IllegalArgumentException("L'ID de l'étudiant ne peut pas être null");
+			throw new IllegalArgumentException("lid de l'étudiant ne peut pas être null");
 		}
 		log.info("Suppression de l'étudiant ID : {}", idEtudiant);
 		Etudiant e = retrieveEtudiant(idEtudiant);
