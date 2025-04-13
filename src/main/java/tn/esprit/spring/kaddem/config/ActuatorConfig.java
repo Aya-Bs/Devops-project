@@ -10,7 +10,8 @@ public class ActuatorConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/actuator/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://localhost:4200", "https://tonfrontend.com")
+
                 .allowedMethods("GET", "POST")
                 .allowedHeaders("*");
     }
