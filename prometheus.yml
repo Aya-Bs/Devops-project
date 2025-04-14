@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s  # Intervalle de scrape de Prometheus
+
+scrape_configs:
+  - job_name: 'prometheus'  # Configuration de Prometheus lui-même
+    static_configs:
+      - targets: ['localhost:9090']  # Cible pour scrapper Prometheus lui-même
+
+  - job_name: 'spring-app'  # Configuration pour ton application Spring Boot
+    metrics_path: '/actuator/prometheus'  # Le chemin où les métriques sont exposées
+    static_configs:
+      - targets: ['kaddem-container:8089']  # Nom du conteneur ou hôte où l'application Spring Boot est en cours d'exécution

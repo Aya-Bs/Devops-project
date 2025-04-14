@@ -34,6 +34,16 @@ services:
     networks:
       - kaddem-net
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-container
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - spring-app
+
 networks:
   kaddem-net:
     driver: bridge
