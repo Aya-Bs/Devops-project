@@ -21,9 +21,6 @@
 
         <!-- SonarQube Properties -->
         <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-        <sonar.language>java</sonar.language>
-        <sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
-        <sonar.java.source>${project.build.sourceDirectory}</sonar.java.source>
     </properties>
     <dependencies>
         <dependency>
