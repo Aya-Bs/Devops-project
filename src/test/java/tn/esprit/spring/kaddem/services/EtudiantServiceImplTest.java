@@ -44,7 +44,7 @@ class EtudiantServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        etudiant = new Etudiant("sarra", "Bennour");
+        etudiant = new Etudiant("noussa", "kaabi");
         etudiant.setIdEtudiant(1);
     }
 
